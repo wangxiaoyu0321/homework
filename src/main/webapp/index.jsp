@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="left-main left-full" id="left">						
 				<li><a href="<%=basePath%>account/getAllAccount"><span class="glyphicon glyphicon-user"></span><span class="sub-title">账号管理</span></a></li>
-				<li><a href="<%=basePath%>user/todo"><span class="glyphicon glyphicon-star"></span><span class="sub-title">待办事项</span></a></li>
+				<li><a href="<%=basePath%>todo/getAllBacklog"><span class="glyphicon glyphicon-star"></span><span class="sub-title">待办事项</span></a></li>
 				<li><a href="<%=basePath%>user/personal"><span class="glyphicon glyphicon-star"></span><span class="sub-title">个人中心</span></a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-list"></span><span class="sub-title">个人计划</span></a></li>
 				<li><a href="www.baidu.com" target="test"><span class="glyphicon glyphicon-book"></span><span class="sub-title">我的笔记</span></a></li>

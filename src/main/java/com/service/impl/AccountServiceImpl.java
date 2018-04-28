@@ -69,17 +69,17 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean deleteByPrimaryKey(Integer id){
 		int n = am.deleteByPrimaryKey(id);
-		if(n != 0){
+		if(n > 0){
 			return true;
-		} else{			
+		} else {			
 			return false;
 		}
 		
 	}
 	//更新员工信息
 	@Override
-	public boolean updateAccountById(Integer id) {
-		int n = am.updateByPrimaryKey(id);
+	public boolean updateAccountById(Account account) {
+		int n = am.updateByPrimaryKey(account);
 		if(n>0) {
 			return true;
 		}else {
@@ -89,14 +89,12 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public boolean searchByName(String name){
-		List<Account> list = am.searchByName(name);
-		if(list != null ){
-			return  true;
-		} else {
-			return false;
-		}
+	public List<Account> searchByName(String name,PageUtil page){
+		return am.searchByName(name,page);	
 	}
 
-
+	@Override
+	public List<Account> searchAccountById(int id) {
+		return am.searchAccountById(id);
+	}
 }

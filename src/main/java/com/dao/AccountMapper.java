@@ -26,7 +26,7 @@ public interface AccountMapper {
 
     Account selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Account record);
+//    int updateByPrimaryKeySelective(Account record);
 	/**
 	 * @Author: 王小萌
 	 * @Date: 2018/4/22 上午11:18
@@ -34,7 +34,7 @@ public interface AccountMapper {
 	 * @Return: { }
 	 * @Descripton: <根据用户主键更新员工信息>
 	 */
-    int updateByPrimaryKey(Integer id);
+    int updateByPrimaryKey(Account account);
     /**
      * @author 王小萌
      * @date 2018-3-29 下午9:24:24
@@ -59,7 +59,16 @@ public interface AccountMapper {
 	public int getCountNum();
 
 	//根据用户名搜索用户信息
-	List<Account> searchByName(String name);
+	List<Account> searchByName(String name,PageUtil page);
+
+	/**
+	 * @Author: 王小萌
+	 * @Date: 2018/4/24 下午10:12
+	 * @Param: {id}
+	 * @Return: {传入用户id，返回相关数据集合}
+	 * @Descripton: <根据用户id查询员工数据信息>
+	 */
+	List<Account> searchAccountById(int id);
 
 	
 }

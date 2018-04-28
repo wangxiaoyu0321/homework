@@ -23,9 +23,21 @@ public interface AccountService {
 	 * @description：判断员工名字是否重复
 	 */
 	public boolean isExist(String name);
-	//获取全部员工
+	/**
+	 * @author 王小萌
+	 * @date 2018-4-25 下午5:19:32
+	 * @param：{page}
+	 * @return：{返回一个list集合}
+	 * @description：<分页：获取全部员工信息>
+	 */
 	List<Account> getAllAccount(PageUtil page);
-	//获取总条数
+	/**
+	 * @author 王小萌
+	 * @date 2018-4-25 下午5:18:46
+	 * @param：null
+	 * @return:{返回数据总数}
+	 * @description：<分页：获取数据总数>
+	 */
 	public int getCountNum();
 	/** @author 王小萌
 	 * @date 2018-4-20 下午4:08:28
@@ -37,11 +49,11 @@ public interface AccountService {
 	/**
 	 * @Author: 王小萌
 	 * @Date: 2018/4/22 上午11:22
-	 * @Param: { id}
+	 * @Param: {account对象}
 	 * @Return: {更新成功返回true，更新失败返回false }
-	 * @Descripton: <根据用户id更新员工信息>
+	 * @Descripton: <修改员工信息>
 	 */
-	boolean updateAccountById(Integer id);
+	boolean updateAccountById(Account account);
 	/**
 	 * @Author: 王小萌
 	 * @Date: 2018/4/22 下午10:30
@@ -49,7 +61,14 @@ public interface AccountService {
 	 * @Return: {查询成功返回true，查询失败返回false }
 	 * @Descripton: <根据用户名获取用户信息>
 	 */
-	boolean searchByName(String name);
-	
+	List<Account> searchByName(String name,PageUtil page);
+	/**
+	 * @author 王小萌
+	 * @date 2018-4-25 下午5:17:30
+	 * @param：{id}
+	 * @return{Account对象}
+	 * @description：<根据用户ID查询员工信息>
+	 */
+	List<Account> searchAccountById(int id);
 	
 }

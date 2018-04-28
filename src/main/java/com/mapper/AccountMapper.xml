@@ -14,64 +14,6 @@
     <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List" >
     id, account, name, age, sex, creatime, createdate, createUser, amount, updateTime, 
     status
@@ -172,66 +114,6 @@
     </trim>
   </insert>
 
-  <update id="updateByExampleSelective" parameterType="map" >
-    update account
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.account != null" >
-        account = #{record.account,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.age != null" >
-        age = #{record.age,jdbcType=INTEGER},
-      </if>
-      <if test="record.sex != null" >
-        sex = #{record.sex,jdbcType=INTEGER},
-      </if>
-      <if test="record.creatime != null" >
-        creatime = #{record.creatime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createdate != null" >
-        createdate = #{record.createdate,jdbcType=DATE},
-      </if>
-      <if test="record.createuser != null" >
-        createUser = #{record.createuser,jdbcType=INTEGER},
-      </if>
-      <if test="record.amount != null" >
-        amount = #{record.amount,jdbcType=DECIMAL},
-      </if>
-      <if test="record.updatetime != null" >
-        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.status != null" >
-        status = #{record.status,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-
-  <update id="updateByExample" parameterType="map" >
-    update account
-    set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      age = #{record.age,jdbcType=INTEGER},
-      sex = #{record.sex,jdbcType=INTEGER},
-      creatime = #{record.creatime,jdbcType=TIMESTAMP},
-      createdate = #{record.createdate,jdbcType=DATE},
-      createUser = #{record.createuser,jdbcType=INTEGER},
-      amount = #{record.amount,jdbcType=DECIMAL},
-      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-
   <update id="updateByPrimaryKeySelective" parameterType="com.entity.Account" >
     update account
     <set >
@@ -286,7 +168,7 @@
   
   <!-- 查找全部员工 -->
   <select id="getAllAccount" parameterType="com.entity.Account" resultMap="BaseResultMap">
-  	select * from account 
+  	select * from account order by id ASC
   	 <if test="startIndex >= 0 and pageSize > 0">
       limit #{startIndex},#{pageSize}
      </if>
@@ -298,7 +180,19 @@
   </select>
 
  <!--根据用户名获取员工数据信息-->
-  <select id="searchByName" parameterType="com.entity.Account" resultMap="BaseResultMap">
-    SELECT * FROM account WHERE NAME = #{name}
+  <select id="searchByName" parameterType="String" resultMap="BaseResultMap">   
+    select * from account 
+    <if test="_parameter != null">
+    	WHERE name = #{name}
+    </if>
+    order by id ASC
+    <if test="startIndex >= 0 and pageSize > 0">
+      limit #{startIndex},#{pageSize}
+     </if>
+  </select>
+
+  <!--根据用户id查找员工数据信息-->
+  <select id="searchAccountById" parameterType="com.entity.Account" resultMap="BaseResultMap">
+    SELECT * FROM account WHERE id = #{id}
   </select>
 </mapper>
