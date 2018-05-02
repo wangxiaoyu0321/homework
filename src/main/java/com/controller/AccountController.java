@@ -1,9 +1,5 @@
-/**
- * 
- */
 package com.controller;
 
-import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;

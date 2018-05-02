@@ -102,13 +102,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<input type="text" name="name" placeholder="请输入用户名。。。" id="input1"/><br><br> 
 				<input type="password" name="password" placeholder="请输入密码。。。" id="input1"><br>
 				<br>
-				<div class="checkbox">
-					<label style="color:#F0F0F0;font-size: 14px;"><input type="checkbox" value="remember-me">记住我</label>
+				<div>
+					<a href="<%=path%>/user/toRetrievePassword">忘记密码</a>
 					<a href="<%=path%>/user/toRegist">注册</a>
 				</div>
 				<button type="button" value="login" onclick="login()" id="button1">登录</button>				
 			</form>
-		</div>
 	</div>
 </body>
 </html>

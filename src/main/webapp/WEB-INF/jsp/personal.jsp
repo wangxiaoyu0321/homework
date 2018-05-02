@@ -38,5 +38,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div class="right-main" style="float:left;margin-left:0px;margin-top:50px;">
 		<h1>个人中心</h1>
+		<form action="file/upload.action" method="post" enctype="multipart/form-data">  
+			<label>上传头像：</label><input type="file" name="file"><br>  
+			<input type="submit">  
+		</form>  
 	</div>
 </html>

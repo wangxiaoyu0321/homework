@@ -47,7 +47,8 @@
 	         <mvc:exclude-mapping path="/user/login"/>
 	         <mvc:exclude-mapping path="/user/toLogin"/>
 	         <mvc:exclude-mapping path="/user/toRegist"/>
-	         
+			<mvc:exclude-mapping path="/user/toRetrievePassword"/>
+			<mvc:exclude-mapping path="/user/retrievePassword"/>
 			<bean class="com.interceptor.LoginInterceptor"></bean> 	
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -37,7 +37,7 @@
 			</ul>
 		</div>
 		<span style="position: absolute;right:80px;top:15px;;">
-			<a href="${pageContext.request.contextPath}/user/toLogin" style="color: white;">退出</a>
+			<a href="${pageContext.request.contextPath}/user/outLogin" style="color: white;">退出</a>
 		</span>
 	</nav>
 	</div>

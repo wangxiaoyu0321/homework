@@ -1,17 +1,20 @@
 package com.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.util.Base64;
+import com.util.MD5;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entity.UserEntity;
@@ -26,9 +29,11 @@ public class UserController {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	Map<String,Object> resultMap  =  new HashMap<String,Object>();
+
 	@Autowired
 	private UserService us;
-	
+
+	//用户登录
 	@RequestMapping("/toLogin")
 	public String toLogin(){
 		return "login";
@@ -49,7 +54,7 @@ public class UserController {
 		 * 防止多参数的情况，如果存在特别多的参数，方法参数放不下，或者直接使用实体类
 		 */
 		String name =  request.getParameter("name");
-		String password = request.getParameter("password");
+		String password = Base64.encode(MD5.MD5(request.getParameter("password")));
 		
 		try{
 			long startTime = System.currentTimeMillis();
@@ -59,7 +64,7 @@ public class UserController {
 			resultMap.put("operFlag", "1000");
 			log.info("登录耗时："+(System.currentTimeMillis()-startTime)+"毫秒");
 		} catch (ThisSystemException e1){
-			log.info("用户或密码错误",e1);
+			log.info(e1.getMessage());
 			resultMap.put("operFlag", "1001");
 			resultMap.put("errorMessage", e1.getMessage());
 		} catch (Exception e){
@@ -70,11 +75,12 @@ public class UserController {
 		log.info("登录结束");
 		return resultMap;		
 	}
-		
+	//欢迎页
 	@RequestMapping("/index")
 	public String toWelcome(){
 		return "index";
 	}
+	//用户注册
 	@RequestMapping("/toRegist")
 	public String toRegist(){
 		return "regist";
@@ -90,7 +96,13 @@ public class UserController {
 	@RequestMapping("/regist")
 	public Map<String,Object> regist(HttpServletRequest request){
 		String name = request.getParameter("name");
-		String password = request.getParameter("password");
+		String password1 = request.getParameter("password");
+		String password2 = MD5.MD5(password1);
+		String password = Base64.encode(password2);
+		log.info("明文密码"+password1);
+		log.info("MD5:"+password2);
+		log.info("Base64"+password);
+		log.info("进入注册方法");
 		try{
 			boolean result = us.isExist(name);
 			if(result){
@@ -138,4 +150,99 @@ public class UserController {
 	public String topersonal(){
 		return "personal";
 	}
+	@RequestMapping("/toRetrievePassword")
+	public String toRetrievePassword(){
+		return "retrievePassword";
+	}
+	/**
+	 * @author 王小萌
+	 * @date 2018-5-2 上午9:58:10
+	 * @param
+	 * @return
+	 * @description：<修改密码>
+	 */
+	@SuppressWarnings("unused")
+	@ResponseBody
+	@RequestMapping("/retrievePassword")
+	public Map<String, Object> retrievePassword(HttpServletRequest request){
+		log.info("-----------------------------进入修改密码----------------------------");
+		//获取用户名、初始密码和修改后的密码
+		String name = request.getParameter("name");
+		String password = Base64.encode(MD5.MD5(request.getParameter("password")));
+		String change = Base64.encode(MD5.MD5(request.getParameter("change")));
+		
+		try {
+			//1.判断用户名是否存在
+			//用户存在/密码正确
+			UserEntity ue = us.checkLogin(name, password);
+			//修改密码
+			boolean Flag = us.updatePasswordByName(name,change);
+			if(Flag){
+				resultMap.put("operFlag", "1000");
+				log.info("--------------------------修改密码成功--------------------------");
+			} else {
+				resultMap.put("operFlag", "1001");
+				resultMap.put("errorMessage", "修改密码失败");
+				log.info("--------------------------修改密码失败--------------------------");
+			}
+		} catch (ThisSystemException e1){
+			//用户名不存在或者密码错误
+			log.info("----------------------------密码错误/用户名不存在------------------------");
+			resultMap.put("operFlag", "1001");
+			resultMap.put("errorMessage", e1.getMessage());
+		}
+		catch (Exception e) {
+			resultMap.put("operFlag", "1001");
+			resultMap.put("errorMessage", "修改密码异常");
+			log.info("--------------------------修改密码异常--------------------------");
+		}		
+		return resultMap;		
+	}
+	
+	@RequestMapping("/outLogin")
+	public String outLogin(HttpSession session){
+		session.invalidate();
+		return "login";
+	}
+	/**
+	 * 上传头像
+	 */
+	@RequestMapping("/upload")
+	public String upload(UserEntity user,HttpServletRequest request){
+		log.info("------------------------获取用户名"+request.getParameter("name")+"------------------------");
+		//保存数据库的路径  
+		String sqlPath = null;   
+		//定义文件保存的本地路径  
+		String localPath="D:\\head-image\\";  
+		//定义文件名  
+		String filename=null;
+		if(!user.getFile().isEmpty()){    
+		    //生成uuid作为文件名称    
+			String uuid = UUID.randomUUID().toString().replaceAll("-","");    
+			//获得文件类型（可以判断如果不是图片，禁止上传）    
+			String contentType=user.getFile().getContentType();    
+			//获得文件后缀名   
+			String suffixName=contentType.substring(contentType.indexOf("/")+1);  
+			//得到 文件名  
+			filename=uuid+"."+suffixName;   
+			System.out.println(filename);  
+			//文件保存路径  
+			try {
+				user.getFile().transferTo(new File(localPath+filename));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
+		}
+		  //把图片的相对路径保存至数据库  
+		  sqlPath = "/images/"+filename;  
+		  System.out.println(sqlPath);  
+		  user.setImage(sqlPath);  	
+		  return null;
+		
+	}
+	
 }

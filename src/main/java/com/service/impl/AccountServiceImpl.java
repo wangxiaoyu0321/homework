@@ -66,6 +66,9 @@ public class AccountServiceImpl implements AccountService {
 		int count = am.getCountNum();
 		return count;
 	}
+	/**
+	 * 根据用户ID删除用户
+	 */
 	@Override
 	public boolean deleteByPrimaryKey(Integer id){
 		int n = am.deleteByPrimaryKey(id);
