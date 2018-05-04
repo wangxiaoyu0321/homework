@@ -5,21 +5,26 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
 </resultMap>
 <!--根据用户名查找用户信息 -->
 <select id="findUserByName" parameterType="map" resultType="UserEntity">
-	select name,password from user where name = #{name}
+	select name,password,image from user where name = #{name}
 </select>
 <!--新增用户-->
 <insert id="addUser" parameterType="com.entity.UserEntity">
-	insert into user(name,password) value(#{name,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+	insert into user(name,password,image) value(#{name,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},'/images/aa516491fad0495ab166b8c223453629.jpeg')
 </insert>
 <!--检查用户名和密码-->
 <select id="check" resultType="boolean">
 	select name,password from user where name = #{name}
 </select>
-
+<!-- 修改密码 -->
 <update id="updatePasswordByName" parameterType="com.entity.UserEntity">
     UPDATE user SET password = #{password} WHERE name = #{name}
+</update>
+<!-- 修改头像 -->
+<update id="updateImageByName" parameterType="com.entity.UserEntity">
+    UPDATE user SET image = #{image} WHERE name = #{name}
 </update>
 </mapper>

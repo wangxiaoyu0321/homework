@@ -36,5 +36,13 @@ public interface UserService {
 	 * @Descripton: <更改密码 >
 	 */
 	public boolean updatePasswordByName(String name,String change);
+	/**
+	 * @author 王小萌
+	 * @date 2018-5-3 上午11:39:20
+	 * @param: {用户名： name}
+	 * @return: {修改成功返回true，修改失败返回false}
+	 * @description：<修改头像>
+	 */
+	public boolean updateImageByName(String name,String image);
 
 }

@@ -11,14 +11,22 @@ import javax.servlet.http.HttpSession;
 
 import com.util.Base64;
 import com.util.MD5;
+
+import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.entity.UserEntity;
 import com.service.UserService;
+import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
+import com.sun.mail.handlers.image_gif;
+
 import common.ThisSystemException;
 
 
@@ -55,7 +63,6 @@ public class UserController {
 		 */
 		String name =  request.getParameter("name");
 		String password = Base64.encode(MD5.MD5(request.getParameter("password")));
-		
 		try{
 			long startTime = System.currentTimeMillis();
 			UserEntity ue = us.checkLogin(name,password);
@@ -147,7 +154,13 @@ public class UserController {
 		return "todo";
 	}
 	@RequestMapping("/personal")
-	public String topersonal(){
+	public String topersonal(UserEntity user,HttpServletRequest request,Model model){
+		log.info("-----------------------进入个人中心方法--------------------");
+		HttpSession session = request.getSession();
+		
+		UserEntity ue=(UserEntity) session.getAttribute("username");
+		model.addAttribute("name", ue.getName());
+		model.addAttribute("image", ue.getImage()==null?"":ue.getImage().trim());
 		return "personal";
 	}
 	@RequestMapping("/toRetrievePassword")
@@ -207,13 +220,20 @@ public class UserController {
 	/**
 	 * 上传头像
 	 */
+	@ResponseBody
 	@RequestMapping("/upload")
-	public String upload(UserEntity user,HttpServletRequest request){
-		log.info("------------------------获取用户名"+request.getParameter("name")+"------------------------");
+	public Map<String, Object> upload(MultipartFile file,UserEntity user,HttpServletRequest request,Model model){
+		System.out.println("111");
+		HttpSession session = request.getSession();
+		UserEntity ue = (UserEntity)session.getAttribute("username");
+		String name = ue.getName();
+		session.setAttribute("name",name);
+//		model.addAttribute("name",name);
+		log.info("------------------------获取用户名"+user+"------------------------");
 		//保存数据库的路径  
 		String sqlPath = null;   
 		//定义文件保存的本地路径  
-		String localPath="D:\\head-image\\";  
+		String localPath="F:\\head-image\\";  
 		//定义文件名  
 		String filename=null;
 		if(!user.getFile().isEmpty()){    
@@ -229,19 +249,38 @@ public class UserController {
 			//文件保存路径  
 			try {
 				user.getFile().transferTo(new File(localPath+filename));
+				//文件保存到本地的路径
+				//把图片的相对路径保存至数据库  
+				sqlPath = "/images/"+filename;  
+				ue.setImage(sqlPath);
+				boolean result = us.updateImageByName(name,sqlPath);
+				if(result){
+					resultMap.put("operFlag", "1000");
+					resultMap.put("image", sqlPath);
+					ue.setImage(sqlPath);
+					session.setAttribute("username", ue);
+					model.addAttribute("image",sqlPath);
+					session.setAttribute("image",sqlPath);
+					log.info("---------------------头像上传成功--------------------------");
+				} else {
+					resultMap.put("operFlag", "1001");
+					resultMap.put("errorMessage", "头像上传失败，请稍后再试");
+					log.info("---------------------头像上传失败--------------------------");
+				}
+				System.out.println("-------------------数据库路径"+sqlPath);  
+				user.setImage(sqlPath); 
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				resultMap.put("operFlag", "1001");
+				resultMap.put("errorMessage", "头像上传异常");
+				log.info("---------------------头像上传异常--------------------------");
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				resultMap.put("operFlag", "1001");
+				resultMap.put("errorMessage", "头像上传异常");
+				log.info("---------------------头像上传异常--------------------------");
 			}    
-		}
-		  //把图片的相对路径保存至数据库  
-		  sqlPath = "/images/"+filename;  
-		  System.out.println(sqlPath);  
-		  user.setImage(sqlPath);  	
-		  return null;
+		}	
+		return resultMap;
 		
 	}
 	

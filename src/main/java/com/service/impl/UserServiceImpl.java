@@ -97,5 +97,22 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/**
+	 * @author 王小萌
+	 * @date 2018-5-3 上午11:39:20
+	 * @param: {用户名： name}
+	 * @return: {修改成功返回true，修改失败返回false}
+	 * @description：<修改头像>
+	 */
+	@Override
+	public boolean updateImageByName(String name,String image) {
+		int n = userDao.updateImageByName(name,image);
+		if(n != 0){
+			return true;
+		} else {			
+			return false;
+		}
+	}
+
 
 }

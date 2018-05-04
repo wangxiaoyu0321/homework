@@ -37,6 +37,14 @@ public interface UserDao {
 	 * @Descripton: <更改密码 >
 	 */
 	public int updatePasswordByName(UserEntity u);
+	/**
+	 * @author 王小萌
+	 * @date 2018-5-3 上午11:30:09
+	 * @param: {用户名： name,图片路径地址}
+	 * @return:
+	 * @description：<修改头像>
+	 */
+	public int updateImageByName(@Param("name")String name,@Param("image")String image);
 
 	
 }

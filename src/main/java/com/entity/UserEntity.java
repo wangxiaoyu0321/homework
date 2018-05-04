@@ -1,9 +1,15 @@
 package com.entity;
 
+import java.io.Serializable;
+
 import org.springframework.web.multipart.MultipartFile;
 
-public class UserEntity {
+public class UserEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7751308188457032196L;
 	public Integer id;
 	public String name;
 	public String password;

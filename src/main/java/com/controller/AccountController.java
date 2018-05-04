@@ -125,10 +125,7 @@ public class AccountController {
 		log.info("获取account集合");
 		page.setStartIndex((page.getCurrentPage() - 1) * pageSize);
 		//获取全部员工，放入集合
-		List<Account> accounts = null;		
-//		String name = request.getParameter("name");
-//		String name = URLDecoder.decode(request.getParameter("name"),"UTF-8");
-		
+		List<Account> accounts = null;				
 		String name = request.getParameter("name");  			
 		if(name != null && !"".equals(name.trim())){
 			name = URLDecoder.decode(name, "UTF-8");  	

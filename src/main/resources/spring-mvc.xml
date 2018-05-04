@@ -4,6 +4,10 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<!-- 导入shiro的相关配置 -->
+    <import resource="classpath:spring-shiro.xml"/>
+    
+	
 	<!-- 扫描所有controller包下面的所有controller -->
 	<context:component-scan base-package="com" />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
@@ -17,10 +21,11 @@
 	</bean>
 	
 	<!-- 开启注解配置 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven />	
 	
 	<!-- 静态资源解析，包括js,css,img... -->
 	<mvc:resources location="/image/" mapping="/image/**" />
+	
 	
 	<!-- 配置视图解析器 -->
 	<bean
@@ -31,13 +36,44 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<!-- 开启shiro注解 -->
+    <bean
+        class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+        depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+
+    <bean
+        class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+    
+     <!-- 未认证或未授权时跳转必须在springmvc里面配，spring-shiro里的shirofilter配不生效 -->
+    <bean
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!--表示捕获的异常 -->
+                <prop key="org.apache.shiro.authz.UnauthorizedException">
+                    <!--捕获该异常时跳转的路径 -->
+                    /error/unauthorized
+                </prop>
+                <!--表示捕获的异常 -->
+                <prop key="org.apache.shiro.authz.UnauthenticatedException">
+                    <!--捕获该异常时跳转的路径 -->
+                    /error/unauthorized
+                </prop>
+            </props>
+        </property>
+    </bean>
+	
 	<!-- 上传文件 -->    
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">    
 	    <property name="defaultEncoding" value="utf-8"/>    
 	    <!-- 最大内存大小 -->    
-	    <property name="maxInMemorySize" value="10240"/>    
+<!-- 	    <property name="maxInMemorySize" value="10240"/>     -->
 	    <!-- 最大文件大小，-1为不限制大小 -->    
-	    <property name="maxUploadSize" value="-1"/>    
+<!-- 	    <property name="maxUploadSize" value="-1"/>     -->
     </bean> 
 	
 	<!--  配置登陆拦截器 -->
