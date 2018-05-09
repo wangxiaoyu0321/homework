@@ -114,5 +114,10 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public UserEntity findUserByName(String name) {
+		return userDao.findUserByName(name);
+	}
+
 
 }

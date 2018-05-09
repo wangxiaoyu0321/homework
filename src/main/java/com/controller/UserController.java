@@ -14,6 +14,10 @@ import com.util.MD5;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,32 +58,57 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/login")
-	public Map<String,Object> login(HttpServletRequest request){
+	public Map<String,Object> login(HttpServletRequest request,String name,String password){
 		
-		log.info("进入登录");
-		
-		/**
-		 * 防止多参数的情况，如果存在特别多的参数，方法参数放不下，或者直接使用实体类
-		 */
-		String name =  request.getParameter("name");
-		String password = Base64.encode(MD5.MD5(request.getParameter("password")));
-		try{
-			long startTime = System.currentTimeMillis();
-			UserEntity ue = us.checkLogin(name,password);
+		log.info("---------------------------进入登录-----------------------------");
+		Subject subject = SecurityUtils.getSubject();
+//		String name =  request.getParameter("name");
+//		String password = request.getParameter("password");
+		// 登录后存放进shiro token 
+		String password2 = MD5.MD5(password);
+		password = Base64.encode(password2);
+		try {
+			UsernamePasswordToken token = new UsernamePasswordToken(name,password);
+			UserEntity ue;
+			log.info("--------------------进入安全认证方法--------------------");
+			subject.login(token);
+			//查到user放进去
+			ue = us.checkLogin(name,password);
 			HttpSession session = request.getSession();
-			session.setAttribute("username", ue);
+			session.setAttribute("username",ue);
 			resultMap.put("operFlag", "1000");
-			log.info("登录耗时："+(System.currentTimeMillis()-startTime)+"毫秒");
-		} catch (ThisSystemException e1){
-			log.info(e1.getMessage());
+			resultMap.put("message", "登录完成");
+			log.info("-------------------登录完成----------------------");
+		} catch (UnknownAccountException e) {
 			resultMap.put("operFlag", "1001");
-			resultMap.put("errorMessage", e1.getMessage());
-		} catch (Exception e){
-			log.error("登录异常",e);
-			resultMap.put("operFlag", "1001");
+			resultMap.put("errorMessage", "没有权限");
+		} catch(Exception e1){
+			log.error("11111111111111",e1);
 		}
-		
-		log.info("登录结束");
+//		
+//		/**
+//		 * 防止多参数的情况，如果存在特别多的参数，方法参数放不下，或者直接使用实体类
+//		 */
+//		String name =  request.getParameter("name");
+//		String password = Base64.encode(MD5.MD5(request.getParameter("password")));
+//		try{
+//			long startTime = System.currentTimeMillis();
+//			UserEntity ue = us.checkLogin(name,password);
+//
+//			HttpSession session = request.getSession();
+//			session.setAttribute("username", ue);
+//			resultMap.put("operFlag", "1000");
+//			log.info("登录耗时："+(System.currentTimeMillis()-startTime)+"毫秒");
+//		} catch (ThisSystemException e1){
+//			log.info(e1.getMessage());
+//			resultMap.put("operFlag", "1001");
+//			resultMap.put("errorMessage", e1.getMessage());
+//		} catch (Exception e){
+//			log.error("登录异常",e);
+//			resultMap.put("operFlag", "1001");
+//		}
+//		
+//		log.info("登录结束");
 		return resultMap;		
 	}
 	//欢迎页

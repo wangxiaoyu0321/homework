@@ -6,7 +6,7 @@ public interface UserService {
 	/**
 	 * @author 王小萌
 	 * @param {name,password}
-	 * @param password
+	 * @param name,password
 	 * @return UserEntity
 	 * @description:
 	 */
@@ -44,5 +44,7 @@ public interface UserService {
 	 * @description：<修改头像>
 	 */
 	public boolean updateImageByName(String name,String image);
+	
+	public UserEntity findUserByName(String name);
 
 }
