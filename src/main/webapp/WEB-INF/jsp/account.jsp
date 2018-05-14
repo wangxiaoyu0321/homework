@@ -6,6 +6,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -68,7 +69,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            <button class="btn-info" id="search" onclick="searchName();"><span class="glyphicon glyphicon-search"></span></button>
 	</div>
 	<div class="btn-group" id="btn-group">
+
 	    <button type="button" class="btn btn-success" onclick="show_modal();"><span class="glyphicon glyphicon-plus" style="margin-right: 4px;"></span><span>新增</span></button>
+
 	    <button type="button" class="btn btn-warning" onclick="update();"><span class="glyphicon glyphicon-pencil" style="margin-right: 4px;"></span><span>修改</span></button>
 	    <button type="button" class="btn btn-danger" onclick="del();" ><span class="glyphicon glyphicon-minus" style="margin-right: 4px;"></span><span>删除</span></button>
 	</div>
@@ -349,18 +352,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function searchName() {
 		console.log("search");
 		var name = $("#searchByName").val();
+		console.log(name);
 		window.location.href="<%=basePath%>account/getAllAccount?name="+encodeURI(encodeURI(name));
-		<%-- $.ajax({
+		$.ajax({
 			url:"<%=basePath%>account/searchByName",
 			type:"POST",
 			data:{'name': name},
 			dataType:"json",
 			success:function(data){
-				if(data.operFlag == 1000){
-					
+				if(data.operFlag == 1000){				
 				}
-			} --%>
-		/* }); */
+			}
+		 }); 
 	};
 	
 	//编辑用户提交

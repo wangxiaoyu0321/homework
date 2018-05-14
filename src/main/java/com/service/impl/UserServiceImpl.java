@@ -1,5 +1,8 @@
 package com.service.impl;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.xml.registry.infomodel.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +120,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserEntity findUserByName(String name) {
 		return userDao.findUserByName(name);
+	}
+
+	@Override
+	public List findPermissonByName(String name) {		
+		return userDao.findPermissonByName(name);
+	}
+	/**
+	 * 根据用户id查询用户角色
+	 */
+	@Override
+	public Set<String> findRoleNameById(Integer id) {
+		return userDao.findRoleNameById(id);
 	}
 
 

@@ -1,5 +1,8 @@
 package com.service;
 
+import java.util.List;
+import java.util.Set;
+
 import com.entity.UserEntity;
 
 public interface UserService {
@@ -44,7 +47,19 @@ public interface UserService {
 	 * @description：<修改头像>
 	 */
 	public boolean updateImageByName(String name,String image);
-	
+	/**
+	 * 
+	 * @param name
+	 * @return 
+	 */
 	public UserEntity findUserByName(String name);
+	
+	public List findPermissonByName(String name);
+	/**
+	 * 
+	 * @param 用户id
+	 * @return 角色名称
+	 */
+	public Set<String> findRoleNameById(Integer id);
 
 }

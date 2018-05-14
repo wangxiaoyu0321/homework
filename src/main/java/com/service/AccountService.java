@@ -70,5 +70,6 @@ public interface AccountService {
 	 * @description：<根据用户ID查询员工信息>
 	 */
 	List<Account> searchAccountById(int id);
+
 	
 }

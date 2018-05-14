@@ -2,6 +2,7 @@ package com.dao;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,18 @@ public interface UserDao {
 	 * @description：<修改头像>
 	 */
 	public int updateImageByName(@Param("name")String name,@Param("image")String image);
+	/**
+	 * 
+	 * @param name
+	 * @return  权限集合
+	 */
+	public List findPermissonByName(@Param("name")String name);
+	/**
+	 * 
+	 * @param id
+	 * @return 角色名称
+	 */
+	public Set<String> findRoleNameById(@Param("id")Integer id);
 
 	
 }

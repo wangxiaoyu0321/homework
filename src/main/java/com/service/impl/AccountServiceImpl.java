@@ -100,4 +100,5 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> searchAccountById(int id) {
 		return am.searchAccountById(id);
 	}
+
 }

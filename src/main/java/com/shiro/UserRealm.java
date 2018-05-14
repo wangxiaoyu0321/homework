@@ -3,11 +3,14 @@
  */
 package com.shiro;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -44,11 +47,26 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
+//		// 从 principals获取主身份信息 
+//		// 将getPrimaryPrincipal方法返回值转为真实身份类型
 //		UserEntity ue = (UserEntity) pc.getPrimaryPrincipal();
-//		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo();
-//		if(ue != null){
-//		}
+//		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+//		log.info("------------------------------------------"+ue+"--------------------------------------");
+//		// 根据身份信息获取权限信息 
+//		// 从数据库获取到权限数据 
+//		Collection<String> permission = us.findPermissonByName(ue.getName());
+//		info.addStringPermissions(permission);
+//		log.info("--------------------------------开始授权---------------------------------");
+//		log.info("----------------------"+permission+"------------------------");
+//		return info;
+		UserEntity user = (UserEntity) SecurityUtils.getSubject().getSession().getAttribute("username");
+		Integer id = user.getId();
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.setRoles(us.findRoleNameById(id));
+		
 		return null;
+		
+		
 	}
 	
 	/**

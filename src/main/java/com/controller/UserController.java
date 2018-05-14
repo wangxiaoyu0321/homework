@@ -3,6 +3,7 @@ package com.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -71,9 +72,9 @@ public class UserController {
 			UsernamePasswordToken token = new UsernamePasswordToken(name,password);
 			UserEntity ue;
 			log.info("--------------------进入安全认证方法--------------------");
-			subject.login(token);
+			subject.login(token);		
 			//查到user放进去
-			ue = us.checkLogin(name,password);
+			ue = us.checkLogin(name,password);			
 			HttpSession session = request.getSession();
 			session.setAttribute("username",ue);
 			resultMap.put("operFlag", "1000");
@@ -83,7 +84,7 @@ public class UserController {
 			resultMap.put("operFlag", "1001");
 			resultMap.put("errorMessage", "没有权限");
 		} catch(Exception e1){
-			log.error("11111111111111",e1);
+			log.error("登录异常",e1);
 		}
 //		
 //		/**
@@ -192,10 +193,17 @@ public class UserController {
 		model.addAttribute("image", ue.getImage()==null?"":ue.getImage().trim());
 		return "personal";
 	}
+	
+	@RequestMapping("/plan")
+	public String toPlan(){
+		return "plan";
+	}
+	
 	@RequestMapping("/toRetrievePassword")
 	public String toRetrievePassword(){
 		return "retrievePassword";
 	}
+	
 	/**
 	 * @author 王小萌
 	 * @date 2018-5-2 上午9:58:10
@@ -241,11 +249,17 @@ public class UserController {
 		return resultMap;		
 	}
 	
+	/**
+	 * @description:<注销>
+	 */
 	@RequestMapping("/outLogin")
 	public String outLogin(HttpSession session){
-		session.invalidate();
-		return "login";
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+//		session.invalidate();
+		return toLogin();
 	}
+	
 	/**
 	 * 上传头像
 	 */
@@ -310,6 +324,22 @@ public class UserController {
 			}    
 		}	
 		return resultMap;
+		
+	}
+	/**
+	 * @author 王小萌
+	 * @date 2018-3-27 上午10:12:19
+	 * @param
+	 * @return 
+	 * @description：根据用户名查询权限
+	 */
+	@RequestMapping("/findPermissonByName")
+	public List findPermissonByName(HttpServletRequest request){
+		log.info("-------------------------------进入查找权限方法--------------------------------------");
+		String name = request.getParameter("name");
+		List list = us.findPermissonByName(name);
+		log.info("-----------------------------权限："+list+"-------------------------------");
+		return null;
 		
 	}
 	

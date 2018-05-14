@@ -117,6 +117,7 @@ public class AccountController {
 	 * @Return: { }
 	 * @Descripton: <获取全部员工>
 	 */
+//	@ResponseBody
 	@RequestMapping("/getAllAccount")
 	public String getAllAccount(HttpServletRequest request,PageUtil page,Model model) throws UnsupportedEncodingException{
 		ModelAndView mav = new ModelAndView();
