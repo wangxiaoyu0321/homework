@@ -74,8 +74,9 @@ public class UserController {
 			log.info("--------------------进入安全认证方法--------------------");
 			subject.login(token);		
 			//查到user放进去
-			ue = us.checkLogin(name,password);			
+			ue = us.checkLogin(name,password);	
 			HttpSession session = request.getSession();
+//			ue = us.findUserByName(name);
 			session.setAttribute("username",ue);
 			resultMap.put("operFlag", "1000");
 			resultMap.put("message", "登录完成");
@@ -86,30 +87,6 @@ public class UserController {
 		} catch(Exception e1){
 			log.error("登录异常",e1);
 		}
-//		
-//		/**
-//		 * 防止多参数的情况，如果存在特别多的参数，方法参数放不下，或者直接使用实体类
-//		 */
-//		String name =  request.getParameter("name");
-//		String password = Base64.encode(MD5.MD5(request.getParameter("password")));
-//		try{
-//			long startTime = System.currentTimeMillis();
-//			UserEntity ue = us.checkLogin(name,password);
-//
-//			HttpSession session = request.getSession();
-//			session.setAttribute("username", ue);
-//			resultMap.put("operFlag", "1000");
-//			log.info("登录耗时："+(System.currentTimeMillis()-startTime)+"毫秒");
-//		} catch (ThisSystemException e1){
-//			log.info(e1.getMessage());
-//			resultMap.put("operFlag", "1001");
-//			resultMap.put("errorMessage", e1.getMessage());
-//		} catch (Exception e){
-//			log.error("登录异常",e);
-//			resultMap.put("operFlag", "1001");
-//		}
-//		
-//		log.info("登录结束");
 		return resultMap;		
 	}
 	//欢迎页
@@ -326,21 +303,9 @@ public class UserController {
 		return resultMap;
 		
 	}
-	/**
-	 * @author 王小萌
-	 * @date 2018-3-27 上午10:12:19
-	 * @param
-	 * @return 
-	 * @description：根据用户名查询权限
-	 */
-	@RequestMapping("/findPermissonByName")
-	public List findPermissonByName(HttpServletRequest request){
-		log.info("-------------------------------进入查找权限方法--------------------------------------");
-		String name = request.getParameter("name");
-		List list = us.findPermissonByName(name);
-		log.info("-----------------------------权限："+list+"-------------------------------");
-		return null;
-		
+	@RequestMapping("/authorization")
+	public String authorization_management(){
+		return "authorization";
 	}
 	
 }

@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -12,22 +13,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
     <title>管理系统</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-
-	
+	<meta http-equiv="description" content="This is my page">	
   </head>
   
   <body>
   <div>
   	<div class="div-top">
     <nav class="navbar" role="navigation">
-<!--  		<div class="container-fluid">  -->
 		<div class="navbar-header">			
 			<a class="navbar-brand" href="<%=basePath%>index.jsp">管理控制台</a>
 		</div>
@@ -48,10 +45,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</li>
 			</ul>
 		</div>
-<!-- 		</div> -->
 	</nav>
-	</div>
-	
+	</div>	
 	<div class="div-content">
 		<div class="div-main" style="float:left">
 			<div class="sidebar-fold">
@@ -61,16 +56,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<li><a href="<%=basePath%>account/getAllAccount"><span class="glyphicon glyphicon-user"></span><span class="sub-title">账号管理</span></a></li>
 				<li><a href="<%=basePath%>todo/getAllBacklog"><span class="glyphicon glyphicon-star"></span><span class="sub-title">待办事项</span></a></li>
 				<li><a href="<%=basePath%>user/personal"><span class="glyphicon glyphicon-star"></span><span class="sub-title">个人中心</span></a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-list"></span><span class="sub-title">个人计划</span></a></li>
-				<li><a href="www.baidu.com" target="test"><span class="glyphicon glyphicon-book"></span><span class="sub-title">我的笔记</span></a></li>
+				<li><a href="<%=basePath%>user/authorization"><span class="glyphicon glyphicon-list"></span><span class="sub-title">权限管理</span></a></li>
+				<li id="li-project"><a><span class="glyphicon glyphicon-book"></span><span class="sub-title">项目管理</span></a></li>
 			</div>
 
 		</div>
-		<div class="right-main" style="float:left;margin-left:0px;background-color: #f5f5f5">
-			<img alt="" src="./image/index.jpg" style="width: 100%;height: 100%;">
+		<div class="right-main" style="float:left;margin-left:0px;background-color: #f5f5f5" id="content">
+<!-- 			<img alt="" src="./image/index.jpg" style="width: 100%;height: 100%;"> -->
 		</div>
 		
 	</div>
-
  </div>	
-  </body>
+</body>
+<script>
+$(document).ready(function(){
+  $("#li-project").click(function(){
+    $("#content").load('<%=basePath%>WEB-INF/jsp/todo.jsp');
+  })
+});
+</script>
+</html>

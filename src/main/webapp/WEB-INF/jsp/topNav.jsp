@@ -17,7 +17,7 @@
     <nav class="navbar" role="navigation">
 <!--  		<div class="container-fluid">  -->
 		<div class="navbar-header">			
-			<a class="navbar-brand" href="<%=basePath%>index.jsp">管理控制台</a>
+			<a class="navbar-brand" href="<%=basePath%>user/index.jsp">管理控制台</a>
 		</div>
  		<div>
 			<ul class="nav navbar-nav">

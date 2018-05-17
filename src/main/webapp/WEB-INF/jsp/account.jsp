@@ -69,11 +69,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            <button class="btn-info" id="search" onclick="searchName();"><span class="glyphicon glyphicon-search"></span></button>
 	</div>
 	<div class="btn-group" id="btn-group">
-
+		<shiro:hasPermission name="add">
 	    <button type="button" class="btn btn-success" onclick="show_modal();"><span class="glyphicon glyphicon-plus" style="margin-right: 4px;"></span><span>新增</span></button>
-
+		</shiro:hasPermission>
 	    <button type="button" class="btn btn-warning" onclick="update();"><span class="glyphicon glyphicon-pencil" style="margin-right: 4px;"></span><span>修改</span></button>
+	    <shiro:hasPermission name="delete">
 	    <button type="button" class="btn btn-danger" onclick="del();" ><span class="glyphicon glyphicon-minus" style="margin-right: 4px;"></span><span>删除</span></button>
+	    </shiro:hasPermission>
 	</div>
 	<!-- account表单 -->		  
 	<div class="container-fluid">

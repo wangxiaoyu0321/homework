@@ -15,6 +15,7 @@ public class UserEntity implements Serializable{
 	public String password;
     private String image;  
     private MultipartFile file;
+    private Integer roleId;
 	public Integer getId() {
 		return id;
 	}
@@ -44,7 +45,14 @@ public class UserEntity implements Serializable{
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
-	}  
+	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
     
 	
 

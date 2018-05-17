@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.entity.Account;
+import com.entity.Role;
 import com.entity.UserEntity;
 
 @Service
@@ -47,17 +48,18 @@ public interface UserDao {
 	 */
 	public int updateImageByName(@Param("name")String name,@Param("image")String image);
 	/**
-	 * 
-	 * @param name
-	 * @return  权限集合
+	 * @author：王小萌
+	 * @date: 2018-5-17 上午11:25:56
+	 * @param: {角色id}
+	 * @return: {权限}
+	 * @description: <根据角色id获取权限>
 	 */
-	public List findPermissonByName(@Param("name")String name);
+	public Set<String> findPermissionByRole(@Param("id")Integer id);
 	/**
 	 * 
 	 * @param id
 	 * @return 角色名称
 	 */
-	public Set<String> findRoleNameById(@Param("id")Integer id);
-
+	public Set<String> findRoleNameById(Integer id);
 	
 }

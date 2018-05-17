@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dao.UserDao;
+import com.entity.Role;
 import com.entity.UserEntity;
 import com.service.UserService;
 
@@ -123,8 +124,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List findPermissonByName(String name) {		
-		return userDao.findPermissonByName(name);
+	public Set<String> findPermissionByRole(Integer id) {		
+		return userDao.findPermissionByRole(id);
 	}
 	/**
 	 * 根据用户id查询用户角色
