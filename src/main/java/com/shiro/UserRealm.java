@@ -6,6 +6,7 @@ package com.shiro;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -23,6 +24,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.entity.Role;
 import com.entity.UserEntity;
 import com.service.UserService;
 import com.util.Base64;
@@ -47,26 +49,17 @@ public class UserRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
-//		// 从 principals获取主身份信息 
-//		// 将getPrimaryPrincipal方法返回值转为真实身份类型
-//		UserEntity ue = (UserEntity) pc.getPrimaryPrincipal();
-//		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//		log.info("------------------------------------------"+ue+"--------------------------------------");
-//		// 根据身份信息获取权限信息 
-//		// 从数据库获取到权限数据 
-//		Collection<String> permission = us.findPermissonByName(ue.getName());
-//		info.addStringPermissions(permission);
-//		log.info("--------------------------------开始授权---------------------------------");
-//		log.info("----------------------"+permission+"------------------------");
-//		return info;
+		log.info("----------------------------进入授权------------------------");
 		UserEntity user = (UserEntity) SecurityUtils.getSubject().getSession().getAttribute("username");
-		Integer id = user.getId();
+		Integer id = user.getRoleId();
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.setRoles(us.findRoleNameById(id));
-		
-		return null;
-		
-		
+		id=user.getRoleId();
+		Set<String> set = us.findPermissionByRole(id);
+		info.setStringPermissions(us.findPermissionByRole(id));
+		log.info("----------------------------完成授权------------------------");
+		log.info(info);
+		return info;		
 	}
 	
 	/**

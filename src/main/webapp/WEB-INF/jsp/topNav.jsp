@@ -1,8 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
 <html>
-  <head>   
-    <title>My JSP 'topNav.jsp' starting page</title>  
+  <head>     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -15,9 +18,8 @@
   <div>
   	<div class="div-top">
     <nav class="navbar" role="navigation">
-<!--  		<div class="container-fluid">  -->
 		<div class="navbar-header">			
-			<a class="navbar-brand" href="<%=basePath%>index.jsp">管理控制台</a>
+			<a class="navbar-brand" href="<%=basePath%>/user/index">管理控制台</a>
 		</div>
  		<div>
 			<ul class="nav navbar-nav">
@@ -34,6 +36,7 @@
 						<li><a href="#">SQL</a></li>
 					</ul>
 				</li>
+				<li><a href="<%=basePath%>/system/SystemManagement">系统管理</a></li>
 			</ul>
 		</div>
 		<span style="position: absolute;right:80px;top:15px;;">

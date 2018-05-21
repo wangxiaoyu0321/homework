@@ -3,6 +3,7 @@ package com.service;
 import java.util.List;
 import java.util.Set;
 
+import com.entity.Role;
 import com.entity.UserEntity;
 
 public interface UserService {
@@ -54,7 +55,7 @@ public interface UserService {
 	 */
 	public UserEntity findUserByName(String name);
 	
-	public List findPermissonByName(String name);
+	public Set<String> findPermissionByRole(Integer id);
 	/**
 	 * 
 	 * @param 用户id

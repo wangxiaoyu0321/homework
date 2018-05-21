@@ -6,10 +6,11 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="roleId" property="roleId" jdbcType="INTEGER" />
 </resultMap>
 <!--根据用户名查找用户信息 -->
 <select id="findUserByName" parameterType="map" resultType="UserEntity">
-	select name,password,image from user where name = #{name}
+	select name,password,image,roleId from user where name = #{name}
 </select>
 <!--新增用户-->
 <insert id="addUser" parameterType="com.entity.UserEntity">
@@ -28,13 +29,25 @@
     UPDATE user SET image = #{image} WHERE name = #{name}
 </update>
 <!-- 根据用户名查询拥有的权限 -->
-<select id="findPermissonByName">
-	SELECT p.name FROM USER u,`user-role` ur,`role-privilege` rp,privilege p
-	WHERE u. NAME = #{name} AND u.id = ur.roleId AND ur.roleId = rp.roleid AND rp.privilege = p.id
-</select>
+<!-- <select id="findPermissonByName"> -->
+<!-- 	SELECT p.name FROM USER u,`user-role` ur,`role-privilege` rp,privilege p -->
+<!-- 	WHERE u. NAME = #{name} AND u.id = ur.roleId AND ur.roleId = rp.roleid AND rp.privilege = p.id -->
+<!-- </select> -->
 <!-- 根据用户ID查询角色名称 -->
-<select id="findRoleNameById" resultType="set">
-	SELECT roleName FROM role-info 
-	WHERE roleId=#{id}
+<select id="findRoleNameById" resultType="map">
+	SELECT
+		roleName
+	FROM
+		`role-info`
+	WHERE
+		roleId = #{id}
+</select>
+<select id="findPermissionByRole" resultType="String">
+SELECT name FROM
+	`role-privilege` rp,
+	privilege p
+WHERE
+	roleid = #{id}
+AND rp.privilege = p.id
 </select>
 </mapper>

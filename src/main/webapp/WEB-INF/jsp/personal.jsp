@@ -1,8 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -73,6 +70,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<button onclick="uploadImage()" type="submit">提交</button>  	
 			</form>  		
 		</div>
+		<shiro:hasPermission name="add">add权限登录显示此内容</shiro:hasPermission>  
+	    <shiro:hasRole name="admin">admin角色登录显示此内容</shiro:hasRole>  
+	    <shiro:hasRole name="normal">normal角色登录显示此内容</shiro:hasRole>  
 	</div>
 </body>
 </html>
