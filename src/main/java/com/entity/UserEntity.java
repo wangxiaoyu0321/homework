@@ -16,6 +16,11 @@ public class UserEntity implements Serializable{
     private String image;  
     private MultipartFile file;
     private Integer roleId;
+    private String phone;
+    private String email;
+    private String remark;
+    private String createtime;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -51,6 +56,30 @@ public class UserEntity implements Serializable{
 	}
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(String createtime) {
+		this.createtime = createtime;
 	}
 
     

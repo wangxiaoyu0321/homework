@@ -10,6 +10,7 @@
     <result column="roleId" property="roleId" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
 </resultMap>
 <!--根据用户名查找用户信息 -->
 <select id="findUserByName" parameterType="map" resultType="UserEntity">
