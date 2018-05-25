@@ -77,6 +77,7 @@ public class SystemManagementController {
 	
 	@RequestMapping("/organization")
 	public String toOrganization(){
+		
 		return "organizationmanagement";
 	}
 	

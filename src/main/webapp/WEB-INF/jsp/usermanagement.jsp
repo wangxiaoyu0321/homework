@@ -14,15 +14,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	.div1 {
 		padding:10px 30px;
 	}
+	.div2 {
+		border:solid 1px;
+		border-color:  #DCDCDC;
+		float:left;
+		height: 200px;
+		width: 166px;
+	}
 	h3 {
 		font-size: 17px;
 	}
 	.btn {
 		
 	}
-	
+	.s1 {
+		background-color: red;
+	}
 </style>
 </head>
+<script type="text/javascript">
+	//选中一行数据后变色
+	$(function(){
+		$("tbody tr").click(function(){
+			$(this).addClass("s1").siblings().removeClass("s1");
+			$(this).find(":radio").attr("checked",true);			
+			var name = $(this).find("td")[0].innerHTML;
+			console.log(name);			
+		});
+	});
+</script>
 <body>
 	<div class="div1">
 		<h3>用户管理</h3>
@@ -43,13 +63,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<label class="btn btn-danger">
 						<input type="checkbox"> 删除
 					</label>
-					<button type="button" class="btn btn-info">分配角色</button>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">分配角色</button>
 				</div>
 			</div>
 			
 			<!-- div2:表单 -->
 			<div>
-			<table align="center" style="width: 100%" class="table table-bordered">
+			<table align="center" style="width: 100%" class="table table-bordered" id="table1">
 				<thead>
 					<tr>
 						<td>用户名</td>
@@ -61,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</thead>
 				<tbody>
 					<c:forEach items="${pageUtil.list }" var="user">
-						<tr>
+						<tr type="radio">
 							<td id="name">${user.name }</td>
 							<td id="phone">${user.phone }</td>
 							<td id="email">${user.email }</td>
@@ -85,34 +105,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<c:if test="${pageUtil.currentPage>1 }">						
 							<li><a href="#" onclick="return previousPage()">上一页</a></li>
 						</c:if>
-						
+						<!-- 中间页 -->											
 						<c:choose>
 							<c:when test="${pageUtil.totalPage<5 }">
 								<c:set var="start" value="1" />
 	       						<c:set var="end" value="${pageUtil.totalPage }" />
 							</c:when>
-						</c:choose>
+							<c:otherwise>
+						        <c:set var="start" value="${pageUtil.currentPage-2 }"/> 
+						        <c:set var="end" value="${pageUtil.currentPage+2 }"/>
+						        <c:if test="${start<1 }">
+						        	<c:set var="start" value="1"/>
+						        	<c:set var="end" value="5"/>
+						        </c:if>
+						        <c:if test="${end > pageUtil.totalPage }">
+						        	<c:set var="start" value="${pageUtil.totalPage-4 }"/>
+						        	<c:set var="end" value="${pageUtil.totalPage }"/>
+						        </c:if>
+						    </c:otherwise>   
+						</c:choose>						
+						
+						<c:forEach begin="${start }" end="${end }" var="i">
+							<c:choose>  
+								<c:when test="${i == pageUtil.currentPage}">  
+									<li class="active"><a href="#">${i}</a></li>  
+								</c:when>   
+								<c:otherwise>  
+									<li><a>${i}</a></li>  
+								</c:otherwise> 
+							</c:choose>  
+						</c:forEach>
 						
 						 <c:forEach begin="${start }" end="${end }" var="i">  
 						   <c:choose>  
 						      <c:when test="${i eq pageUtil.currentPage }">  
-						       <li><a href="#">${i }</a></li>  
+
 						      </c:when>  
 						      <c:otherwise>  
-						        <a href="${pb.url }&pc=${i}" class="aBtn">${i }</a>  
+
 						      </c:otherwise>  
 						   </c:choose>               
 						 </c:forEach>  
-						 
-<!-- 						<c:forEach items="i" var="i1"> -->
-<!-- 							<li><a href="#">${i1 }</a></li> -->
-<!-- 						</c:forEach> -->
-<!-- 						<li><a href="#">i</a></li> -->
-<!-- 						<li><a href="#">1</a></li> -->
-<!-- 						<li><a href="#">2</a></li> -->
-<!-- 						<li><a href="#">3</a></li> -->
-<!-- 						<li><a href="#">4</a></li> -->
-<!-- 						<li><a href="#">5</a></li> -->
+			
+						
 						<!-- 当前页<总页数时，显示下一页 -->
 						<c:if test="${pageUtil.currentPage<pageUtil.totalPage }">
 							<li><a href="#" onclick="return nextPage()">下一页</a></li>
@@ -121,6 +156,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</ul>
 				</div>
 			</div>
+			
+			
+			
+			<!-- 分配角色模态框（Modal）--start -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!-- div1：标题 -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" 
+									aria-hidden="true">×
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								分配角色
+							</h4>
+						</div>
+						<!-- div2：分配角色内容 -->
+						<div class="modal-body" style="height: 240px;">
+							<div class="div2" style="margin-left: 40px;">
+								<ul>
+									<li>总经理</li>
+								</ul>
+							</div>
+							<div class="div2" style="margin-left: 140px;">
+								<ul>
+									
+								</ul>
+							</div>
+						</div>
+						<!-- div3：底部按钮 -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" 
+									data-dismiss="modal">关闭
+							</button>
+							<button type="button" class="btn btn-primary">
+								提交更改
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<!-- 分配角色模态框（Modal）--end -->
 			
 		</div>
 	</div>
