@@ -1,7 +1,11 @@
 package com.entity;
-
+/**
+ * @author 王小萌
+ * @description: <组织信息>
+ */
 public class OrganizationInfo {
-    private Integer id;
+	
+	private Integer id;
 
     private String orgname;
 

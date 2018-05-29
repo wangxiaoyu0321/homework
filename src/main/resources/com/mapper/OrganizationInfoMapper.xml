@@ -69,8 +69,121 @@
   <sql id="Base_Column_List" >
     id, orgName, parentId, level, state
   </sql>
-  <select id="getUserTreeList" resultType="com.entity.OrganizationInfo">
-  	select * from organization_info
-  	order by case when parentId=0	
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.OrganizationInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from organization_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.entity.OrganizationInfoExample" >
+    delete from organization_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.entity.OrganizationInfo" >
+    insert into organization_info (id, orgName, parentId, 
+      level, state)
+    values (#{id,jdbcType=INTEGER}, #{orgname,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.OrganizationInfo" >
+    insert into organization_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgname != null" >
+        orgName,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orgname != null" >
+        #{orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.entity.OrganizationInfoExample" resultType="java.lang.Integer" >
+    select count(*) from organization_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update organization_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgname != null" >
+        orgName = #{record.orgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null" >
+        parentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update organization_info
+    set id = #{record.id,jdbcType=INTEGER},
+      orgName = #{record.orgname,jdbcType=VARCHAR},
+      parentId = #{record.parentid,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <!-- 组织关系树 -->
+  <select id="findAllLibrary" resultMap="BaseResultMap">
+  	SELECT * FROM
+		organization_info
+	WHERE
+		orgName != ''
+	ORDER BY
+		CASE
+	WHEN parentId = 0 THEN
+		Id * 10000
+	ELSE
+		parentId * 10000 + Id
+	END
   </select>
 </mapper>

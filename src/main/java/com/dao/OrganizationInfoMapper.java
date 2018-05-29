@@ -19,4 +19,6 @@ public interface OrganizationInfoMapper {
     int updateByExampleSelective(@Param("record") OrganizationInfo record, @Param("example") OrganizationInfoExample example);
 
     int updateByExample(@Param("record") OrganizationInfo record, @Param("example") OrganizationInfoExample example);
+    
+    List<OrganizationInfo> findAllLibrary();
 }
