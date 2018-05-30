@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.entity.RoleInfo;
 import com.entity.UserEntity;
+import com.service.RoleService;
 import com.service.UserService;
 import com.util.PageUtil;
 
@@ -28,6 +30,8 @@ public class SystemManagementController {
 	
 	@Autowired
 	UserService us;
+	@Autowired
+	RoleService rs;
 	@RequestMapping("/SystemManagement")
 	public String UserManagement(){
 		return "SystemManagement";		
@@ -71,13 +75,20 @@ public class SystemManagementController {
 	
 	
 	@RequestMapping("/role")
-	public String toRole(){
+	public String toRole(PageUtil pageUtil,Model model,HttpServletRequest request){
+		log.info("----------------------获取role集合-----------------------");
+		pageUtil.setPageSize(pageSize);
+		pageUtil = new PageUtil();
+		List<RoleInfo> list = null;
+		list = rs.getAllRole(pageUtil);
+		pageUtil.setList(list);
+		log.info(list);
+		model.addAttribute("pageUtil",pageUtil);
 		return "rolemanagement";
 	}
 	
 	@RequestMapping("/organization")
-	public String toOrganization(){
-		
+	public String toOrganization(){		
 		return "organizationmanagement";
 	}
 	

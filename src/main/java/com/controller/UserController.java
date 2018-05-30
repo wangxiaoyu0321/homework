@@ -307,5 +307,10 @@ public class UserController {
 	public String authorization_management(){
 		return "authorization";
 	}
+	//工作台
+	@RequestMapping("/workbench")
+	public String toWorkBench(){
+		return "workbench";
+	}
 	
 }

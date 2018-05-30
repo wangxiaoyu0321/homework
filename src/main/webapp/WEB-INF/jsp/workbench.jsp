@@ -19,10 +19,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">	
+<style type="text/css">
+	.div-content {
+		background-color: #f5f5f6;
+		padding: 20px 30px;
+	}
+	h3 {
+		font-size: 15px;
+	}
+	.div_todo {
+		width: 60%;
+		background-color: white;
+		height: 35%;
+		padding: 1px 16px;
+	}
+</style>
   </head>
   
   <body>
   <div>
+  	<!-- div1:顶端导航栏 -->
   	<div class="div-top">
     <nav class="navbar" role="navigation">
 		<div class="navbar-header">			
@@ -51,24 +67,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</span>
 	</nav>
 	</div>	
+	<!-- div2：底部内容 -->
 	<div class="div-content">
-		<div class="div-main" style="float:left">
-			<div class="sidebar-fold">
-				<span class="glyphicon glyphicon-menu-hamburger"></span>
-			</div>
-			<div class="left-main left-full" id="left">						
-				<li><a href="<%=basePath%>account/getAllAccount"><span class="glyphicon glyphicon-user"></span><span class="sub-title">账号管理</span></a></li>
-				<li><a href="<%=basePath%>todo/getAllBacklog"><span class="glyphicon glyphicon-star"></span><span class="sub-title">待办事项</span></a></li>
-				<li><a href="<%=basePath%>user/personal"><span class="glyphicon glyphicon-star"></span><span class="sub-title">个人中心</span></a></li>
-				<li><a href="<%=basePath%>user/authorization"><span class="glyphicon glyphicon-list"></span><span class="sub-title">权限管理</span></a></li>
-				<li id="li-project"><a><span class="glyphicon glyphicon-book"></span><span class="sub-title">项目管理</span></a></li>
-				<li id="li-project"><a href="<%=basePath%>system/SystemManagement"><span class="glyphicon glyphicon-book"></span><span class="sub-title">系统管理</span></a></li>
-			</div>
-
+		<div class="div_todo">
+			<h3>待办事项</h3>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
 		</div>
-		<div class="right-main" style="float:left;margin-left:0px;background-color: #f5f5f5" id="content">
-		</div>
-		
 	</div>
  </div>	
 </body>

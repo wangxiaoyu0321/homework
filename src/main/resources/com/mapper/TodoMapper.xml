@@ -68,7 +68,7 @@
   <sql id="Base_Column_List" >
     id, content, creatime, category
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.TodoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.Todo" >
     select
     <if test="distinct" >
       distinct
@@ -92,7 +92,7 @@
     delete from todo
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.entity.TodoExample" >
+  <delete id="deleteByExample" parameterType="com.entity.Todo" >
     delete from todo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.entity.TodoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.entity.Todo" resultType="java.lang.Integer" >
     select count(*) from todo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

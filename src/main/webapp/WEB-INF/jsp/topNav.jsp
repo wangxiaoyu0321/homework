@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
  		<div>
 			<ul class="nav navbar-nav">
-				<li><a href="#">测试管理</a></li>
+				<li><a href="#">在线办公</a></li>
 				<li><a href="#">需求管理</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
