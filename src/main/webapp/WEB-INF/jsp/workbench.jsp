@@ -33,6 +33,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		height: 35%;
 		padding: 1px 16px;
 	}
+	.div_td {
+		background-color:#F5F5F5;
+		height: 60%;
+		width: 30%;
+		margin-right: 20px;
+	}
 </style>
   </head>
   
@@ -71,9 +77,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="div-content">
 		<div class="div_todo">
 			<h3>待办事项</h3>
-			<div>2</div>
-			<div>3</div>
-			<div>4</div>
+			<div class="div_td" style="float:left">2</div>
+			<div class="div_td" style="float:left">3</div>
+			<div class="div_td" style="float:right">4</div>
 		</div>
 	</div>
  </div>	
