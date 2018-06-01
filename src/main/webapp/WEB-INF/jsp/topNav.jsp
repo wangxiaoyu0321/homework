@@ -19,11 +19,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="div-top">
     <nav class="navbar" role="navigation">
 		<div class="navbar-header">			
-			<a class="navbar-brand" href="<%=basePath%>/user/index">管理控制台</a>
+			<a class="navbar-brand" href="<%=basePath%>/user/workbench">管理控制台</a>
 		</div>
  		<div>
 			<ul class="nav navbar-nav">
-				<li><a href="#">在线办公</a></li>
+				<li><a href="<%=basePath%>/user/index">在线办公</a></li>
 				<li><a href="#">需求管理</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -15,7 +15,8 @@
 			<div class="sidebar-fold">
 				<span class="glyphicon glyphicon-menu-hamburger"></span>
 			</div>
-			<div class="left-main left-full" id="left">						
+			<div class="left-main left-full" id="left">	
+				<li id="createProject"><a href="<%=basePath%>/account/getAllAccount"><span class="glyphicon glyphicon-user"></span><span class="sub-title">新建项目</span></a></li>					
 				<li id="1"><a href="<%=basePath%>/account/getAllAccount"><span class="glyphicon glyphicon-user"></span><span class="sub-title">账号管理</span></a></li>
 				<li id="2"><a href="<%=basePath%>/todo/getAllBacklog"><span class="glyphicon glyphicon-star"></span><span class="sub-title">待办事项</span></a></li>
 				<li id="3"><a href="<%=basePath%>/user/personal"><span class="glyphicon glyphicon-star"></span><span class="sub-title">个人中心</span></a></li>
@@ -24,8 +25,15 @@
 
 			</div>
 		</div>
-		<div class="right-main" style="float:left;margin-left:0px;" id="content">
+		<div class="right-main" style="float:left;margin-left:0px;" id="right-main">
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#createProject").click(function(){
+		$("#right-main").load('<%=basePath%>project/createProject');
+});
+});
+</script>
 </html>

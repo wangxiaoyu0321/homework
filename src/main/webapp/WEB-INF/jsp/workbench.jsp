@@ -22,22 +22,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <style type="text/css">
 	.div-content {
 		background-color: #f5f5f6;
-		padding: 20px 30px;
+		padding: 20px;
 	}
 	h3 {
-		font-size: 15px;
+		font-size: 14px;
 	}
 	.div_todo {
-		width: 60%;
+		width: 50%;
 		background-color: white;
-		height: 35%;
-		padding: 1px 16px;
+		height: 20%;
+		padding: 1px 12px;
 	}
 	.div_td {
 		background-color:#F5F5F5;
-		height: 60%;
+		height: 65%;
 		width: 30%;
-		margin-right: 20px;
+		margin-right: 18px;
+		padding-top: 4%;
+	}
+	.div_tp {
+		height: 27%;
+		background-color:#F5F5F5;
+		color: #A9A9A9;
 	}
 </style>
   </head>
@@ -76,10 +82,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- div2：底部内容 -->
 	<div class="div-content">
 		<div class="div_todo">
-			<h3>待办事项</h3>
-			<div class="div_td" style="float:left">2</div>
-			<div class="div_td" style="float:left">3</div>
-			<div class="div_td" style="float:right">4</div>
+			<div style="float:left;width: 60%">
+			<h3>安全预警</h3>
+				<div class="div_td" style="float:left;" align="center">
+					<span style="color: #C6D0D4;font-size: 32px;">2</span><br>
+					<span font-size: 12px;">紧急事件</span>
+				</div>
+				<div class="div_td" style="float:left" align="center">
+					<span style="color: #C6D0D4;font-size: 32px;">2</span><br>
+					<span>漏洞</span>
+				</div>
+				<div class="div_td" style="float:right" align="center">
+					<span style="color: #C6D0D4;font-size: 32px;">2</span><br>
+					<span>攻击</span>
+				</div>
+			</div>			
+			<div style="float: right;width: 40%">
+			<h3>安全防护</h3>
+				<div class="div_tp" style="margin-bottom: 18px;">主机安全</div>
+				<div class="div_tp">危险预警</div>
+			</div>
 		</div>
 	</div>
  </div>	

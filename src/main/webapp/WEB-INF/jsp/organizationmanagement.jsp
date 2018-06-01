@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 cache : false, //是否使用缓存  
                 type : 'post', //请求方式,post  
                 dataType : "json", //数据传输格式  
-                url : "<%=basePath %>/library/findAllLibrary/ ", //请求链接  
+                url : "<%=basePath %>library/findAllLibrary ", //请求链接  
                 error : function() {  
                      alert('亲，网络有点不给力呀！');  
                 },  

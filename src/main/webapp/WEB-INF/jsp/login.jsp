@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           console.log(data);//打印服务端返回的数据(调试用)
           if (data.operFlag == '1000') {
             alert("SUCCESS");
-            window.location.href="<%=basePath%>/account/getAllAccount";
+            window.location.href="<%=basePath%>/user/workbench";
           }else if(data.operFlag == '1001'){
           	alert(data.errorMessage);
           };

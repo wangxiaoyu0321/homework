@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class ProjectInfo {
-    private String id;
+	
+	private String id;
 
     private String proname;
 
@@ -15,6 +16,10 @@ public class ProjectInfo {
     private Integer creater;
 
     private Integer signer;
+    
+    private String developer;
+    
+    private int area;
 
     private String orgid;
 
@@ -34,7 +39,23 @@ public class ProjectInfo {
 
     private String spare3;
 
-    public String getId() {
+    public int getArea() {
+		return area;
+	}
+
+	public void setArea(int area) {
+		this.area = area;
+	}
+
+	public String getDeveloper() {
+		return developer;
+	}
+
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
+
+	public String getId() {
         return id;
     }
 

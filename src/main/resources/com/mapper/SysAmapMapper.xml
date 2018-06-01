@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.SysAmapMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.SysAmap" >
+    <id column="fd_id" property="fdId" jdbcType="INTEGER" />
+    <result column="fd_citycode" property="fdCitycode" jdbcType="VARCHAR" />
+    <result column="fd_adcode" property="fdAdcode" jdbcType="INTEGER" />
+    <result column="fd_name" property="fdName" jdbcType="VARCHAR" />
+    <result column="fd_center" property="fdCenter" jdbcType="VARCHAR" />
+    <result column="fd_level" property="fdLevel" jdbcType="VARCHAR" />
+    <result column="fd_areacode" property="fdAreacode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fd_id, fd_citycode, fd_adcode, fd_name, fd_center, fd_level, fd_areacode
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.entity.SysAmapExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_amap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_amap
+    where fd_id = #{fdId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_amap
+    where fd_id = #{fdId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.entity.SysAmapExample" >
+    delete from sys_amap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.entity.SysAmap" >
+    insert into sys_amap (fd_id, fd_citycode, fd_adcode, 
+      fd_name, fd_center, fd_level, 
+      fd_areacode)
+    values (#{fdId,jdbcType=INTEGER}, #{fdCitycode,jdbcType=VARCHAR}, #{fdAdcode,jdbcType=INTEGER}, 
+      #{fdName,jdbcType=VARCHAR}, #{fdCenter,jdbcType=VARCHAR}, #{fdLevel,jdbcType=VARCHAR}, 
+      #{fdAreacode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.SysAmap" >
+    insert into sys_amap
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fdId != null" >
+        fd_id,
+      </if>
+      <if test="fdCitycode != null" >
+        fd_citycode,
+      </if>
+      <if test="fdAdcode != null" >
+        fd_adcode,
+      </if>
+      <if test="fdName != null" >
+        fd_name,
+      </if>
+      <if test="fdCenter != null" >
+        fd_center,
+      </if>
+      <if test="fdLevel != null" >
+        fd_level,
+      </if>
+      <if test="fdAreacode != null" >
+        fd_areacode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fdId != null" >
+        #{fdId,jdbcType=INTEGER},
+      </if>
+      <if test="fdCitycode != null" >
+        #{fdCitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="fdAdcode != null" >
+        #{fdAdcode,jdbcType=INTEGER},
+      </if>
+      <if test="fdName != null" >
+        #{fdName,jdbcType=VARCHAR},
+      </if>
+      <if test="fdCenter != null" >
+        #{fdCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="fdLevel != null" >
+        #{fdLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="fdAreacode != null" >
+        #{fdAreacode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.entity.SysAmapExample" resultType="java.lang.Integer" >
+    select count(*) from sys_amap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_amap
+    <set >
+      <if test="record.fdId != null" >
+        fd_id = #{record.fdId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fdCitycode != null" >
+        fd_citycode = #{record.fdCitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdAdcode != null" >
+        fd_adcode = #{record.fdAdcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.fdName != null" >
+        fd_name = #{record.fdName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdCenter != null" >
+        fd_center = #{record.fdCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdLevel != null" >
+        fd_level = #{record.fdLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdAreacode != null" >
+        fd_areacode = #{record.fdAreacode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_amap
+    set fd_id = #{record.fdId,jdbcType=INTEGER},
+      fd_citycode = #{record.fdCitycode,jdbcType=VARCHAR},
+      fd_adcode = #{record.fdAdcode,jdbcType=INTEGER},
+      fd_name = #{record.fdName,jdbcType=VARCHAR},
+      fd_center = #{record.fdCenter,jdbcType=VARCHAR},
+      fd_level = #{record.fdLevel,jdbcType=VARCHAR},
+      fd_areacode = #{record.fdAreacode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.SysAmap" >
+    update sys_amap
+    <set >
+      <if test="fdCitycode != null" >
+        fd_citycode = #{fdCitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="fdAdcode != null" >
+        fd_adcode = #{fdAdcode,jdbcType=INTEGER},
+      </if>
+      <if test="fdName != null" >
+        fd_name = #{fdName,jdbcType=VARCHAR},
+      </if>
+      <if test="fdCenter != null" >
+        fd_center = #{fdCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="fdLevel != null" >
+        fd_level = #{fdLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="fdAreacode != null" >
+        fd_areacode = #{fdAreacode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fd_id = #{fdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.SysAmap" >
+    update sys_amap
+    set fd_citycode = #{fdCitycode,jdbcType=VARCHAR},
+      fd_adcode = #{fdAdcode,jdbcType=INTEGER},
+      fd_name = #{fdName,jdbcType=VARCHAR},
+      fd_center = #{fdCenter,jdbcType=VARCHAR},
+      fd_level = #{fdLevel,jdbcType=VARCHAR},
+      fd_areacode = #{fdAreacode,jdbcType=VARCHAR}
+    where fd_id = #{fdId,jdbcType=INTEGER}
+  </update>
+</mapper>
