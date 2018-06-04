@@ -35,16 +35,23 @@ public class ProjectController {
 	@RequestMapping("/create")
 	public Map<String,Object> toCreate(HttpServletRequest request){
 		log.info("-------------------------开始创建项目---------------------------------");
-		String ProjectName = request.getParameter("name");
-		String money = request.getParameter("money");
-		BigDecimal bd = new BigDecimal(money);
-		String developer = request.getParameter("developer");
+		String ProjectName = request.getParameter("name");	//项目名
+		String money = request.getParameter("money");		//项目金额
+		BigDecimal bd = new BigDecimal(money);				
+		String developer = request.getParameter("developer");//开发商
 		Integer area = Integer.parseInt(request.getParameter("area"));
+		String province = request.getParameter("province");	//项目所在省
+		String city = request.getParameter("city");			//项目所在市
+		String district = request.getParameter("district"); //项目所在区
 		ProjectInfo pi = new ProjectInfo();
 		pi.setArea(area);
 		pi.setDeveloper(developer);
 		pi.setProname(ProjectName);
 		pi.setQuoteprice(bd);
+		pi.setProvince(province);
+		pi.setCity(city);
+		pi.setDistrict(district);
+		log.info(pi);
 		int result = ps.createProject(pi);
 		try{
 			

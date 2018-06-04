@@ -4,8 +4,9 @@
   <resultMap id="BaseResultMap" type="com.entity.ProjectInfo" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="proName" property="proname" jdbcType="VARCHAR" />
-    <result column="provice" property="provice" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="city" jdbcType="VARCHAR" />
     <result column="creater" property="creater" jdbcType="INTEGER" />
     <result column="area" property="area" jdbcType="INTEGER" />
     <result column="developer" property="developer" jdbcType="VARCHAR" />
@@ -79,7 +80,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, proName, provice, city, creater, signer, orgId, productType, quotePrice, agreement, 
+    id, proName, province, city, creater, signer, orgId, productType, quotePrice, agreement, 
     state, createTime, spare1, spare2, spare3
   </sql>
 
@@ -96,14 +97,14 @@
 
   <!-- 新建项目 -->
   <insert id="createProject" parameterType="com.entity.ProjectInfo" >
-    insert into project_info (id, proName, provice, 
-      city, creater, signer, developer,area,
+    insert into project_info (id, proName, province, 
+      city, district, creater, signer, developer,area,
       orgId, productType, quotePrice, 
       agreement, state, createTime, 
       spare1, spare2, spare3
       )
-    values (#{id,jdbcType=VARCHAR}, #{proname,jdbcType=VARCHAR}, #{provice,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{creater,jdbcType=INTEGER}, #{signer,jdbcType=INTEGER}, #{developer,jdbcType=VARCHAR}, #{area,jdbcType=INTEGER},
+    values (#{id,jdbcType=VARCHAR}, #{proname,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{creater,jdbcType=INTEGER}, #{signer,jdbcType=INTEGER}, #{developer,jdbcType=VARCHAR}, #{area,jdbcType=INTEGER},
       #{orgid,jdbcType=VARCHAR}, #{producttype,jdbcType=CHAR}, #{quoteprice,jdbcType=DECIMAL}, 
       #{agreement,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{spare1,jdbcType=VARCHAR}, #{spare2,jdbcType=VARCHAR}, #{spare3,jdbcType=VARCHAR}
@@ -119,8 +120,8 @@
       <if test="proname != null" >
         proName,
       </if>
-      <if test="provice != null" >
-        provice,
+      <if test="province != null" >
+        province,
       </if>
       <if test="city != null" >
         city,
@@ -166,8 +167,8 @@
       <if test="proname != null" >
         #{proname,jdbcType=VARCHAR},
       </if>
-      <if test="provice != null" >
-        #{provice,jdbcType=VARCHAR},
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
       </if>
       <if test="city != null" >
         #{city,jdbcType=VARCHAR},
@@ -217,8 +218,8 @@
       <if test="record.proname != null" >
         proName = #{record.proname,jdbcType=VARCHAR},
       </if>
-      <if test="record.provice != null" >
-        provice = #{record.provice,jdbcType=VARCHAR},
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
       </if>
       <if test="record.city != null" >
         city = #{record.city,jdbcType=VARCHAR},
@@ -265,7 +266,7 @@
     update project_info
     set id = #{record.id,jdbcType=VARCHAR},
       proName = #{record.proname,jdbcType=VARCHAR},
-      provice = #{record.provice,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
       city = #{record.city,jdbcType=VARCHAR},
       creater = #{record.creater,jdbcType=INTEGER},
       signer = #{record.signer,jdbcType=INTEGER},
@@ -288,8 +289,8 @@
       <if test="proname != null" >
         proName = #{proname,jdbcType=VARCHAR},
       </if>
-      <if test="provice != null" >
-        provice = #{provice,jdbcType=VARCHAR},
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
       </if>
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
@@ -333,7 +334,7 @@
   <update id="updateByPrimaryKey" parameterType="com.entity.ProjectInfo" >
     update project_info
     set proName = #{proname,jdbcType=VARCHAR},
-      provice = #{provice,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       creater = #{creater,jdbcType=INTEGER},
       signer = #{signer,jdbcType=INTEGER},

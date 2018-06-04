@@ -9,10 +9,12 @@ public class ProjectInfo {
 
     private String proname;
 
-    private String provice;
+    private String province;
 
     private String city;
 
+    private String district;
+    
     private Integer creater;
 
     private Integer signer;
@@ -39,7 +41,15 @@ public class ProjectInfo {
 
     private String spare3;
 
-    public int getArea() {
+    public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public int getArea() {
 		return area;
 	}
 
@@ -71,12 +81,12 @@ public class ProjectInfo {
         this.proname = proname;
     }
 
-    public String getProvice() {
-        return provice;
+    public String getProvince() {
+        return province;
     }
 
-    public void setProvice(String provice) {
-        this.provice = provice;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getCity() {

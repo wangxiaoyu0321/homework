@@ -8,6 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
   	<!-- 引入CSS -->  
+  	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=95d5504ea55a29a2404e9336988cced8&plugin=AMap.DistrictSearch"></script>
    	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css"> 
 	<!-- 引入bootstrap -->
  	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
