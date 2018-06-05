@@ -43,6 +43,7 @@ public class ProjectController {
 		String province = request.getParameter("province");	//项目所在省
 		String city = request.getParameter("city");			//项目所在市
 		String district = request.getParameter("district"); //项目所在区
+		String remark = request.getParameter("remark");
 		ProjectInfo pi = new ProjectInfo();
 		pi.setArea(area);
 		pi.setDeveloper(developer);
@@ -51,10 +52,10 @@ public class ProjectController {
 		pi.setProvince(province);
 		pi.setCity(city);
 		pi.setDistrict(district);
+		pi.setRemark(remark);
 		log.info(pi);
 		int result = ps.createProject(pi);
-		try{
-			
+		try{			
 			if(result>0){			
 				resultMap.put("operFlag",1000);
 			} else {

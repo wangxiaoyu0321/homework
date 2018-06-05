@@ -15,6 +15,7 @@
     <result column="productType" property="producttype" jdbcType="CHAR" />
     <result column="quotePrice" property="quoteprice" jdbcType="DECIMAL" />
     <result column="agreement" property="agreement" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="CHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="spare1" property="spare1" jdbcType="VARCHAR" />
@@ -98,13 +99,13 @@
   <!-- 新建项目 -->
   <insert id="createProject" parameterType="com.entity.ProjectInfo" >
     insert into project_info (id, proName, province, 
-      city, district, creater, signer, developer,area,
+      city, district, creater, signer,remark, developer,area,
       orgId, productType, quotePrice, 
       agreement, state, createTime, 
       spare1, spare2, spare3
       )
     values (#{id,jdbcType=VARCHAR}, #{proname,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{creater,jdbcType=INTEGER}, #{signer,jdbcType=INTEGER}, #{developer,jdbcType=VARCHAR}, #{area,jdbcType=INTEGER},
+      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{creater,jdbcType=INTEGER}, #{signer,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR}, #{developer,jdbcType=VARCHAR}, #{area,jdbcType=INTEGER},
       #{orgid,jdbcType=VARCHAR}, #{producttype,jdbcType=CHAR}, #{quoteprice,jdbcType=DECIMAL}, 
       #{agreement,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{spare1,jdbcType=VARCHAR}, #{spare2,jdbcType=VARCHAR}, #{spare3,jdbcType=VARCHAR}
@@ -143,6 +144,9 @@
       </if>
       <if test="agreement != null" >
         agreement,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
       <if test="state != null" >
         state,
@@ -190,6 +194,9 @@
       </if>
       <if test="agreement != null" >
         #{agreement,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="state != null" >
         #{state,jdbcType=CHAR},

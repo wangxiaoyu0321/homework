@@ -24,6 +24,8 @@ public class ProjectInfo {
     private int area;
 
     private String orgid;
+    
+    private String remark;
 
     private String producttype;
 
@@ -40,8 +42,16 @@ public class ProjectInfo {
     private String spare2;
 
     private String spare3;
+    
+    public String getRemark() {
+		return remark;
+	}
 
-    public String getDistrict() {
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getDistrict() {
 		return district;
 	}
 

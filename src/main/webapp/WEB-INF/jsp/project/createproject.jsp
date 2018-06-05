@@ -12,10 +12,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <title>新建项目</title>
 <style type="text/css">
+	lable {
+		font-weight: normal;
+	}
 	.div {
 		height: 100%;
 		width: 100%;
 		background-color: #FFFFFF;
+	}
+	.div3 {
+		margin-top: 20px;
 	}
 	li {
 		height: 10%;
@@ -59,97 +65,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	input{
 		padding-left: 10px;
 	}
+	button {
+		border-radius:0px;
+	}
 </style>
-
-</head>
-<body>
-<div class="div">
-	<!-- 选项卡菜单-->
-	<ul id="myTab" class="nav nav-tabs" role="tablist" style="border: 0px;">
-	    <li class="active li0" class="li0">
-	    <a href="#bulletin" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
-	   		<span class="span1">1</span>
-	   		<span>基本信息填写</span>
-	    </a>
-	    </li class="li0">
-	    <li >
-	    <a href="#rule" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
-	   		<span class="span1">2</span>
-	   		<span>制作内容备注</span>
-	    </a>
-	    </li class="li0">
-	    <li class="li0"><a href="#forum" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
-	    	<span class="span1">3</span>
-	   		<span>制作说明书</span>
-	    </a></li>
-	</ul>
-	<br>
-	<!-- 进度条 -->
-	<div class="progress" style="height: 8px;margin-bottom: 40px;">
-		<div class="progress-bar" role="progressbar" aria-valuenow="40"
-			 aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;height: 8px;">
-			<span class="sr-only">40% 完成</span>
-		</div>
-	</div>
-	<div style="height:5px;width: 100%;">
-		<button type="button" class="btn btn-success" style="float: right;border-radius:0px;margin-right: 30px;" id="btn" onclick="submit1()">确认提交</button>
-	</div>
-		
-	<!-- 选项卡面板 -->
-	<div id="myTabContent" class="tab-content" style="margin-top: 40px;">
-	<form action="">
-		<!-- 基本信息内容 -->
-	    <div class="tab-pane fade in active" id="bulletin">
-			<div class="div2">
-				<span style="margin-right: 50px;">合同类型</span>
-				<span>
-					<input name="contract" type="radio">房地产项目
-					<input name="contract" type="radio">非房地产项目
-				</span>
-			</div>
-			<div class="div2">
-				<span>项目名称</span>
-				<input class="input" placeholder="请输入项目名称" id="project_name">
-			</div>
-			<div class="div2">
-				<span>&nbsp&nbsp&nbsp开发商</span>
-				<input class="input" placeholder="请选择开发商" id="developer">
-			</div>
-			<div class="div2">
-				<span>甲方金额</span>
-				<input class="input" placeholder="请输入甲方金额" id="money">
-			</div>
-			<div class="div2">
-				<span>&nbsp&nbsp&nbsp签单人</span>
-				<input class="input" placeholder="请输入签单人" id="signer">
-			</div>
-				<!-- 高德start -->				
-				<div id="tip" class="div2">
-				<span style="margin-right: 30px;">项目城市</span>
-				    <select id='province' onchange='search(this)' class="city"></select>
-				    <select id='city' onchange='search(this)' class="city"></select>
-				    <select id='district' class="city"></select>
-				</div>
-				<!-- 高德end -->			
-			<div class="div2">
-				<span>建筑面积</span>
-				<input class="input" placeholder="请输入建筑面积" id="area"/>
-			</div>
-			</div>
-		</form>
-		</div>
-	    <div class="tab-pane fade" id="rule">规则内容面板</div>
-	    <div class="tab-pane fade" id="forum">论坛内容面板</div>
-	</div>
-</div>
-
 <script type="text/javascript">
-
+	function nextPage1(){
+		$("#myTab li:eq(1) a").tab('show');
+	}
+	function nextPage2(){
+		//制作说明书
+		$("#myTab li:eq(2) a").tab('show');
+		//回显项目名称
+		var name=window.document.getElementById ("name"); 
+		name.innerHTML=$("#project_name").val();
+		//回显开发商信息
+		var developer=window.document.getElementById ("developer0"); 
+		developer.innerHTML=$("#developer").val();
+		//回显项目城市
+		var city=window.document.getElementById ("city0"); 
+		city.innerHTML=province;
+		//回显甲方金额
+		var money=window.document.getElementById ("money0"); 
+		money.innerHTML=$("#money").val();
+		//回显建筑面积
+		var area=window.document.getElementById ("area0"); 
+		area.innerHTML=$("#area").val();
+		//回显制作内容备注
+		var remark=window.document.getElementById ("remark0"); 
+		remark.innerHTML=$("#remark").val();
+	}
+	function priviousPage1(){
+		$("#myTab li:eq(0) a").tab('show');
+	}
+	function priviousPage2(){
+		$("#myTab li:eq(1) a").tab('show');
+	}
 	//setTimeout("a()",400);//延时2秒 
     var map, district, polygons = [], citycode;
     var citySelect = document.getElementById('city');
     var districtSelect = document.getElementById('district');
-
+     
+    var province = "";
+    var city = "";
+    var district = "";
+	
     //行政区划查询
     var opts = {
         subdistrict: 1,   //返回下一级行政区
@@ -172,15 +132,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
     }); 
     function getData(data,level) {
-        
         //清空下一级别的下拉列表
         if (level === 'province') {
             citySelect.innerHTML = '';
             districtSelect.innerHTML = '';
+            province = data.name;
         } else if (level === 'city') {
             districtSelect.innerHTML = '';
-        }
-
+            city = data.name;
+        } 
+        
         var subList = data.districtList;
         if (subList) {
             var contentSub = new Option('--请选择--');
@@ -198,9 +159,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 curList.add(contentSub);
             }
         }
-        
+        console.log(data.level,data.name);
     };
-
     function search(obj) {
         //清除地图上所有覆盖物
         for (var i = 0, l = polygons.length; i < l; i++) {
@@ -219,19 +179,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         });
     };
-</script>
-
-<script type="text/javascript">
-	function submit1(){
+    
+    function search1(obj){
+    	var option = obj[obj.options.selectedIndex];
+    	district = option.text;  	
+    };
+    
+    //提交审核
+    function submit1(){
 		console.log("提交项目信息");
 		var name = $("#project_name").val();
 		var developer = $("#developer").val();
 		var money = $("#money").val();
 		var signer = $("#signer").val();
 		var area = $("#area").val();
-		var province = $("#province").val();
+		var remark=$("#remark").val();
+		/* var province = $("#province").val();
+		var province = $("#province").data;
 		var city = $("#city").val();
-		var district = $("#district").val();
+		var district = $("#district").val(); */
+		console.log(province+"---"+city+"----"+district);
 		$.ajax({
 			url:"<%=basePath%>project/create",
 			type:"POST",
@@ -243,25 +210,178 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				'area':area,
 				'province':province,
 				'city':city,
-				'district':district
+ 				'district':district,
+ 				'remark':remark
 			},	
 			dataType:"json",
 			success: function (data){
 			  if (data.operFlag == '1000') {
 			  	alert("SUCCESS");
-// 			  	window.location.href="<%=basePath%>account/getAllAccount";
+			  	window.location.href="<%=basePath%>user/workbench";
 			  } else if(data.operFlag =='1001') {
 			      alert(data.errorMessage);
 			  };
 			},
 			error:function(data){
 				if(data.operFlag == '1001'){
-					alert("Alter account excetion,please try again later!");
+					alert("Alter account exception,please try again later!");
 				};
 			}
 			});
 	};
 </script>
+</head>
+<body>
+<div class="div">
+	<!-- 选项卡菜单start-->
+	<ul id="myTab" class="nav nav-tabs" role="tablist" style="border: 0px;">
+	    <li class="active li0" class="li0">
+	    <a href="#bulletin" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
+	   		<span class="span1">1</span>
+	   		<span>基本信息填写</span>
+	    </a>
+	    </li class="li0">
+	    <li >
+	    <a href="#rule" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
+	   		<span class="span1">2</span>
+	   		<span>制作内容备注</span>
+	    </a>
+	    </li class="li0">
+	    <li class="li0"><a href="#forum" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
+	    	<span class="span1">3</span>
+	   		<span>制作说明书</span>
+	    </a></li>
+	</ul>
+	<!-- 选项卡菜单end--> 
+	<br>		
+	<!-- 选项卡面板 -->
+	<div id="myTabContent" class="tab-content" style="margin-top: 40px;">	
+		<!-- depart1 -->
+	    <div class="tab-pane fade in active" id="bulletin">
+	    	<!-- depart 1.1进度条 -->
+			<div class="progress" style="height: 8px;margin-bottom: 40px;">
+				<div class="progress-bar" role="progressbar" aria-valuenow="40"
+					 aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;height: 8px;">
+					<span class="sr-only">40% 完成</span>
+				</div>
+			</div>
+			<!-- depart 1.2按钮 -->
+			<div style="margin-bottom: 40px;height: 40px">							
+					<button class="btn btn-success" onclick="nextPage1()" style="float: right;border-radius:0px;">下一步</button>				
+			</div>
+			<!-- depart 1.3表单 -->
+			<div>
+			<form action="">
+			<!-- 基本信息内容 -->
+				<div class="div2">
+					<span style="margin-right: 50px;">合同类型</span>
+					<span>
+						<input name="contract" type="radio">房地产项目
+						<input name="contract" type="radio">非房地产项目
+					</span>
+				</div>
+				<div class="div2">
+					<span>项目名称</span>
+					<input class="input" placeholder="请输入项目名称" id="project_name">
+				</div>
+				<div class="div2">
+					<span>&nbsp&nbsp&nbsp开发商</span>
+					<input class="input" placeholder="请选择开发商" id="developer">
+				</div>
+				<div class="div2">
+					<span>甲方金额</span>
+					<input class="input" placeholder="请输入甲方金额" id="money">
+				</div>
+				<div class="div2">
+					<span>&nbsp&nbsp&nbsp签单人</span>
+					<input class="input" placeholder="请输入签单人" id="signer">
+				</div>
+					<!-- 高德start -->				
+					<div id="tip" class="div2">
+					<span style="margin-right: 30px;">项目城市</span>
+					    <select id='province' onchange='search(this)' class="city" name="province"></select>
+					    <select id='city' onchange='search(this)' class="city"></select>
+					    <select id='district' onchange='search1(this)' class="city"></select>
+					</div>
+					<!-- 高德end -->			
+				<div class="div2">
+					<span>建筑面积</span>
+					<input class="input" placeholder="请输入建筑面积" id="area"/>
+				</div>
+			</form>
+			</div>
+		</div>
+		
+		<!-- depart2 -->
+	    <div class="tab-pane fade" id="rule">
+		    <!-- depart 2.1进度条 -->
+			<div class="progress" style="height: 8px;margin-bottom: 40px;">
+				<div class="progress-bar" role="progressbar" aria-valuenow="40"
+					 aria-valuemin="0" aria-valuemax="100" style="width: 67%;height: 8px;">
+					<span class="sr-only">40% 完成</span>
+				</div>
+			</div>
+			<!-- depart2.2 按钮 -->
+			<div style="margin-bottom: 40px;height: 40px">							
+					<button class="btn btn-success" onclick="nextPage2()" style="float: right;border-radius:0px;">下一步</button>				
+					<button class="btn btn-success" onclick="priviousPage1()" style="float: right;border-radius:0px;">上一步</button>
+			</div>
+			<!-- depart3.2 制作内容文本框 -->			
+				制作内容:<textarea style="height: 450px;width: 650px;" id="remark"></textarea>
+			
+		</div>
+		
+		<!-- depart3 -->
+	    <div class="tab-pane fade" id="forum">
+	    	<!-- depart 3.1进度条 -->
+			<div class="progress" style="height: 8px;margin-bottom: 40px;">
+				<div class="progress-bar" role="progressbar" aria-valuenow="40"
+					 aria-valuemin="0" aria-valuemax="100" style="width: 100%;height: 8px;">
+					<span class="sr-only">40% 完成</span>
+				</div>
+			</div>
+			<!-- depart3.2 按钮 -->
+			<div style="margin-bottom: 40px;height: 40px">							
+					<button type="button" class="btn btn-success" style="float: right;border-radius:0px;" id="btn" onclick="submit1()">提交审核</button>		
+					<button class="btn btn-success" onclick="priviousPage2()" style="float: right;border-radius:0px;">上一步</button>		
+			</div>
+			<!-- 3.3产品说明书 -->
+			<div style="height: auto;width: auto;padding-left: 140px;"align="left">
+				<div><span class="glyphicon glyphicon-home" style="color: rgb(58, 157, 167);font-size: 16px;"> 项目信息</span></div>
+				<div class="div3">
+					<label>项目名称：</label>
+					<span id="name" style="width: auto"></span>
+				</div>
+				<div class="div3">
+					<label>开发商：</label>
+					<span id="developer0" style="width: auto;"></span>
+				</div>
+				<div class="div3">
+					<label>项目城市：</label>
+					<span id="city0" style="width: auto;"></span>
+				</div>
+				<div class="div3">
+					<label>甲方金额：</label>
+					<span id="money0" style="width: auto;"></span>
+				</div>
+				<div class="div3">
+					<label>建筑面积：</label>
+					<span id="area0" style="width: auto;"></span>
+				</div>
+			<hr style="padding-left: 140px;">
+			</div>
+			<div style="height: auto;width: auto;padding-left: 140px;"align="left">
+				<div class="div3">
+					<span class="glyphicon glyphicon-pencil" style="color: rgb(58, 157, 167);font-size: 16px"> 制作内容</span><br/>
+					<span id="remark0" style="width: auto;"></span>
+				</div>
+			</div>
+	    </div>
+		</div>
+		
+    </div>		
+
+
 </body>
 
 </html>

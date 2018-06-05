@@ -7,8 +7,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script> 
-	<script src="<%=basePath %>js/jquery-1.4.4.min.js"></script> 
+<!-- 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>  -->
+<!-- 	<script src="<%=basePath %>js/jquery-1.4.4.min.js"></script>  -->
 	<script src="<%=basePath %>js/jquery.ztree.all.js"></script> 
 	<script src="<%=basePath %>js/jquery.ztree.all.min.js"></script> 
 	<script src="<%=basePath %>js/jquery.ztree.core.js"></script> 
@@ -59,16 +59,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 cache : false, //是否使用缓存  
                 type : 'post', //请求方式,post  
                 dataType : "json", //数据传输格式  
-                url : "<%=basePath %>library/findAllLibrary ", //请求链接  
+                url : "<%=basePath %>library/findAllLibrary", //请求链接  
                 error : function() {  
                      alert('亲，网络有点不给力呀！');  
                 },  
                 success : function(data) {
-                	/* console.log(data.orgList);  */ 
                 	ztreeNodes = eval(data.orgList);
                      /* ztreeNodes = eval( "["+data.orgList+"]" ); //将string类型转换成json对象   */
-                     /* console.log(ztreeNodes);    */           
-                     $.fn.zTree.init($( "#tree"), setting, ztreeNodes);  
+                     /* console.log(ztreeNodes);    */     
+                     console.log(2);      
+                     $.fn.zTree.init($("#tree"), setting, ztreeNodes);  
                      /* zTree_Menu = $.fn.zTree.getZTreeObj("tree");  
                      demoIframe = demoIframe =  $("#testIframe");
                      demoIframe.bind("load", loadReady);

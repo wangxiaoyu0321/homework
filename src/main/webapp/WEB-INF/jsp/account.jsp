@@ -317,7 +317,7 @@
 	function update() {
 		var id = $("input[name='userSelect']:checked").val();
 		$.ajax({
-			url:"<%=basePath%>account/searchAccountById",
+			url:"<%=basePath%>/account/searchAccountById",
 			type:"POST",
 			data:{'id': id},
 			dataType:"json",
