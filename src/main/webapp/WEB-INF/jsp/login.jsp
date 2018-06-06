@@ -14,7 +14,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="ajax方式">
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script>
+<!-- 引入表单验证CSS -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/bootstrapValidator.css">  
+<!-- 引入表单验证js -->
+<script src="${pageContext.request.contextPath}/js/bootstrapValidator.js" type="text/javascript" language="javascript"></script>
 <script type="text/javascript">
     function login() {
       $.ajax({
@@ -98,8 +102,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<form id="form1">
 				<h2 class="form-signin-heading" align="center" style="color:#DAA520">用户登录</h2>
-				<input type="text" name="name" placeholder="请输入用户名。。。" id="input1"/><br><br> 
-				<input type="password" name="password" placeholder="请输入密码。。。" id="input1"><br>
+				<div class="form-group">
+					<input type="text" name="name" placeholder="请输入用户名。。。" id="input1"/><br><br> 
+					<input type="password" name="password" placeholder="请输入密码。。。" id="input1"><br>
+				</div>
 				<br>
 				<div>
 					<a href="<%=path%>/user/toRetrievePassword"  style="margin-right: 90px;">修改密码</a>

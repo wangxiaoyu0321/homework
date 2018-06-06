@@ -69,5 +69,10 @@ public class ProjectController {
 		
 		return resultMap;
 	}
+	@RequestMapping("/demo")
+	public String toDemo(){
+		return "demo";
+		
+	}
 
 }

@@ -7,9 +7,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- 这里要配置参数key,将其值设置为高德官网开发者获取的key -->
 
+<script src="${pageContext.request.contextPath }/js/bootstrapValidator.js" type="text/javascript"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/CSS/bootstrapValidator.css">
+<!-- 引入表单验证js -->
+<!-- <script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script> -->
+<!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script> -->
+<!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script> -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新建项目</title>
 <style type="text/css">
 	lable {
@@ -52,6 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		width: 40%;
 		margin-left: 25px;
 		border: solid 1px #DCDCDC;
+		margin-right: 20px;
 	}
 	.city {
 		height: 34px;
@@ -68,9 +74,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	button {
 		border-radius:0px;
 	}
+	.error {
+		color: red;
+	}
 </style>
+
 <script type="text/javascript">
 	function nextPage1(){
+		$.validator.setDefaults({
+	    submitHandler: function() {
+	      alert("提交事件!");
+	    }
+	});
 		$("#myTab li:eq(1) a").tab('show');
 	}
 	function nextPage2(){
@@ -115,16 +130,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         subdistrict: 1,   //返回下一级行政区
         level: 'all'
     };
-    
-//     function a(){
-//     	 district = new AMap.DistrictSearch(opts);//注意：需要使用插件同步下发功能才能这样直接使用    
-// 	    district.search('中国', function(status, result) {
-// 	        if(status=='complete'){
-// 	            getData(result.districtList[0]);
-// 	        }
-// 	    });
-//     }
-    
+       
     district = new AMap.DistrictSearch(opts);//注意：需要使用插件同步下发功能才能这样直接使用    
     district.search('中国', function(status, result) {
         if(status=='complete'){
@@ -230,6 +236,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 	};
 </script>
+
 </head>
 <body>
 <div class="div">
@@ -266,48 +273,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			</div>
 			<!-- depart 1.2按钮 -->
-			<div style="margin-bottom: 40px;height: 40px">							
-					<button class="btn btn-success" onclick="nextPage1()" style="float: right;border-radius:0px;">下一步</button>				
-			</div>
 			<!-- depart 1.3表单 -->
 			<div>
-			<form action="">
+			<div style="margin-bottom: 40px;height: 40px">							
+					<button class="btn btn-success" onclick="nextPage1()" style="float: right;border-radius:0px;" type="submit">下一步</button>				
+			</div>
+			<form id="form-base">
 			<!-- 基本信息内容 -->
-				<div class="div2">
+				<div class="form-group div2">
 					<span style="margin-right: 50px;">合同类型</span>
 					<span>
 						<input name="contract" type="radio">房地产项目
 						<input name="contract" type="radio">非房地产项目
 					</span>
 				</div>
-				<div class="div2">
+				<fieldset>
+				<div class="form-group div2">
 					<span>项目名称</span>
-					<input class="input" placeholder="请输入项目名称" id="project_name">
+					<input class="input" placeholder="请输入项目名称" name="project_name" id="project_name"/>
 				</div>
-				<div class="div2">
+				</fieldset>
+				<div class="form-group div2">
 					<span>&nbsp&nbsp&nbsp开发商</span>
-					<input class="input" placeholder="请选择开发商" id="developer">
+					<input class="input" placeholder="请选择开发商" id="developer" name="developer">
 				</div>
-				<div class="div2">
+				<div class="form-group div2">
 					<span>甲方金额</span>
-					<input class="input" placeholder="请输入甲方金额" id="money">
+					<input class="input" placeholder="请输入甲方金额" id="money" name="money">
 				</div>
-				<div class="div2">
+				<div class="form-group div2">
 					<span>&nbsp&nbsp&nbsp签单人</span>
 					<input class="input" placeholder="请输入签单人" id="signer">
 				</div>
-					<!-- 高德start -->				
-					<div id="tip" class="div2">
-					<span style="margin-right: 30px;">项目城市</span>
-					    <select id='province' onchange='search(this)' class="city" name="province"></select>
-					    <select id='city' onchange='search(this)' class="city"></select>
-					    <select id='district' onchange='search1(this)' class="city"></select>
-					</div>
-					<!-- 高德end -->			
-				<div class="div2">
+				<!-- 日历控件 -->
+<!-- 				<div class="form-group">
+					日期：<input class="Wdate" onFocus="calendar({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm',minDate:new Date(),})" name="date"/>   
+				</div> -->
+				<!-- 高德start -->				
+				<div id="tip" class="form-group div2">
+				<span style="margin-right: 30px;">项目城市</span>
+				    <select id='province' onchange='search(this)' class="city" name="province"></select>
+				    <select id='city' onchange='search(this)' class="city"></select>
+				    <select id='district' onchange='search1(this)' class="city"></select>
+				</div>
+				<!-- 高德end -->			
+				<div class="form-group div2">
 					<span>建筑面积</span>
 					<input class="input" placeholder="请输入建筑面积" id="area"/>
 				</div>
+				<p>
+      <input class="submit" type="submit" value="提交">
+    </p>
 			</form>
 			</div>
 		</div>
@@ -342,7 +358,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<!-- depart3.2 按钮 -->
 			<div style="margin-bottom: 40px;height: 40px">							
-					<button type="button" class="btn btn-success" style="float: right;border-radius:0px;" id="btn" onclick="submit1()">提交审核</button>		
+					<button class="btn btn-success" style="float: right;border-radius:0px;" id="btn" type="submit" onclick="submit1()">提交审核</button>		
 					<button class="btn btn-success" onclick="priviousPage2()" style="float: right;border-radius:0px;">上一步</button>		
 			</div>
 			<!-- 3.3产品说明书 -->
@@ -381,7 +397,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
     </div>		
 
-
+<script type="text/javascript">
+	//表单验证
+	$(document).ready(function() {		
+	    $('#form-base').bootstrapValidator({
+	        message: 'This value is not valid',
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+	            project_name: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请填写项目名',
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});
+	
+</script>
 </body>
 
 </html>

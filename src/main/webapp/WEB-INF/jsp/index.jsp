@@ -11,9 +11,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=95d5504ea55a29a2404e9336988cced8&plugin=AMap.DistrictSearch"></script>
    	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css"> 
 	<!-- 引入bootstrap -->
+	<script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script>
  	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <title>管理系统</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -79,6 +80,7 @@ $(document).ready(function(){
 	$("#createProject").click(function(){
 		console.log("新建项目");
 		$("#right-main").load('<%=basePath%>project/createProject');
+// 		$("#right-main").load('<%=basePath%>project/demo');
 	});
 });
 

@@ -1,8 +1,12 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=c1fdcd9d44865bd9b66993523e4711d968bea296
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/LeftList.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/account.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/authorization.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/demo.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/index.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/login.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/organizationmanagement.jsp=UTF-8
@@ -11,8 +15,5 @@ encoding//src/main/webapp/WEB-INF/jsp/projectManagement.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/regist_success.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/todo.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/topNav.jsp=UTF-8
-<<<<<<< HEAD
 encoding//src/main/webapp/WEB-INF/jsp/usermanagement.jsp=UTF-8
-=======
->>>>>>> c1fdcd9d44865bd9b66993523e4711d968bea296
 encoding/<project>=UTF-8
