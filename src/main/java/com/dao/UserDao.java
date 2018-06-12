@@ -2,6 +2,7 @@ package com.dao;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
@@ -78,5 +79,10 @@ public interface UserDao {
 	 * @description: <获取用户总数>
 	 */
 	public int getUserNum();
+	
+    //获取签单人
+    List<UserEntity> getSigner();
+    //根据用户名查询组织名称
+    Set<String> getOrgNameById(String name);
 	
 }

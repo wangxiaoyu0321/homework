@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.entity.OrganizationInfo;
 import com.entity.UserEntity;
+import com.service.ProjectService;
 import com.service.UserService;
 import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
 import com.sun.mail.handlers.image_gif;
@@ -45,6 +48,8 @@ public class UserController {
 
 	@Autowired
 	private UserService us;
+	@Autowired
+	private ProjectService ps;
 
 	//用户登录
 	@RequestMapping("/toLogin")
@@ -59,7 +64,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/login")
-	public Map<String,Object> login(HttpServletRequest request,String name,String password){
+	public Map<String,Object> login(HttpServletRequest request,String name,String password,Model model){
 		
 		log.info("---------------------------进入登录-----------------------------");
 		Subject subject = SecurityUtils.getSubject();
@@ -75,9 +80,14 @@ public class UserController {
 			subject.login(token);		
 			//查到user放进去
 			ue = us.checkLogin(name,password);	
+			Integer orgId = ue.getOrgId();
 			HttpSession session = request.getSession();
 //			ue = us.findUserByName(name);
 			session.setAttribute("username",ue);
+			OrganizationInfo oi;
+			oi = ps.getOrgNameById(orgId);
+			model.addAttribute("orgName",oi.getOrgname());
+			session.setAttribute("orgName",oi.getOrgname());
 			resultMap.put("operFlag", "1000");
 			resultMap.put("message", "登录完成");
 			log.info("-------------------登录完成----------------------");
@@ -168,6 +178,7 @@ public class UserController {
 		UserEntity ue=(UserEntity) session.getAttribute("username");
 		model.addAttribute("name", ue.getName());
 		model.addAttribute("image", ue.getImage()==null?"":ue.getImage().trim());
+		model.addAttribute("orgId",ue.getRoleId());
 		return "personal";
 	}
 	

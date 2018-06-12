@@ -20,7 +20,14 @@ public class UserEntity implements Serializable{
     private String email;
     private String remark;
     private String createtime;
+    private Integer orgId;  
     
+	public Integer getOrgId() {
+		return orgId;
+	}
+	public void setOrgId(Integer orgId) {
+		this.orgId = orgId;
+	}
 	public Integer getId() {
 		return id;
 	}

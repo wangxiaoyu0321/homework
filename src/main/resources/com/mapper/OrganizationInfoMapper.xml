@@ -66,6 +66,12 @@
       </foreach>
     </where>
   </sql>
+	<!-- 查询用户所在的组织名称 -->
+	<select id="getOrgNameById" parameterType="com.entity.OrganizationInfo" resultType="com.entity.OrganizationInfo">
+		SELECT * FROM organization_info oi
+		WHERE
+		oi.id=#{orgId}
+	</select>
   <sql id="Base_Column_List" >
     id, orgName, parentId, level, state
   </sql>

@@ -60,7 +60,7 @@
 </script>
 <body>
     <div class="right-main" style="float:left;margin-left:0px;margin-top:50px;">
-		<h1>${name}的 个人中心</h1>
+		<h1>${name}的 个人中心</h1><h2>组织ID：${orgId }，隶属部门${sessionScope.orgName}</h2>
 		<div style="text-align: left;margin-left: 20px;">
 			<img src="${image }" style="height: 150px;width: 150px;border-radius: 50%">
 		</div>

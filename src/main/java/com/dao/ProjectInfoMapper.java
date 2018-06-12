@@ -1,6 +1,8 @@
 package com.dao;
 
 import com.entity.ProjectInfo;
+import com.entity.UserEntity;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 /**
@@ -21,4 +23,5 @@ public interface ProjectInfoMapper {
     int updateByPrimaryKeySelective(ProjectInfo record);
 
     int updateByPrimaryKey(ProjectInfo record);
+
 }

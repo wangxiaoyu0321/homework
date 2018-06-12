@@ -11,10 +11,11 @@
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="orgId" property="remark" jdbcType="INTEGER" />
 </resultMap>
 <!--根据用户名查找用户信息 -->
-<select id="findUserByName" parameterType="map" resultType="UserEntity">
-	select name,password,image,roleId from user where name = #{name}
+<select id="findUserByName" parameterType="map" resultType="com.entity.UserEntity">
+	select * from user where name = #{name}
 </select>
 <!--新增用户-->
 <insert id="addUser" parameterType="com.entity.UserEntity">
@@ -33,6 +34,10 @@
     UPDATE user SET image = #{image} WHERE name = #{name}
 </update>
 
+<!-- 新建项目获取签单人 -->
+<select id="getSigner" parameterType="com.entity.UserEntity" resultType="Map">
+	SELECT name FROM `user`
+</select>
 <!-- 根据用户名查询拥有的权限 -->
 <!-- <select id="findPermissonByName"> -->
 <!-- 	SELECT p.name FROM USER u,`user-role` ur,`role-privilege` rp,privilege p -->

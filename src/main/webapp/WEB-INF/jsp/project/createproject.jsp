@@ -5,11 +5,14 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 
 <script src="${pageContext.request.contextPath }/js/bootstrapValidator.js" type="text/javascript"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/CSS/bootstrapValidator.css">
+
+<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script> 
 <!-- 引入表单验证js -->
 <!-- <script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script> -->
 <!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script> -->
@@ -59,6 +62,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		border: solid 1px #DCDCDC;
 		margin-right: 20px;
 	}
+	.selectpicker {
+		height: 34px;
+		width: 40%;
+		margin-left: 32%;
+		border: solid 1px #DCDCDC;
+		border-radius:0px;
+		margin-top: 0px;
+		color: #DCDCDC;
+	}
 	.city {
 		height: 34px;
 		width: 12%;
@@ -81,12 +93,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script type="text/javascript">
 	function nextPage1(){
-		$.validator.setDefaults({
-	    submitHandler: function() {
-	      alert("提交事件!");
-	    }
-	});
+// 		$('#form-base').bootstrapValidator('validate');
+// 			if ($("#form-base").data('bootstrapValidator').isValid()) {
+// 				$("#myTab li:eq(1) a").tab('show');
+// 		}
+
 		$("#myTab li:eq(1) a").tab('show');
+		var productType = window.document.getElementsByName("product");
+     	var s=[];//如果这样定义var s;变量s中会默认被赋个null值
+        for(var i=0;i<productType.length;i++){
+			if(productType[i].checked) //取到对象数组后，我们来循环检测它是不是被选中
+            check.push(productType[k].value);
+				s+=productType[i].value;  //如果选中，将value添加到变量s中  
+     	}
+     	productType=s;
+      	console.log(s);
 	}
 	function nextPage2(){
 		//制作说明书
@@ -109,6 +130,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//回显制作内容备注
 		var remark=window.document.getElementById ("remark0"); 
 		remark.innerHTML=$("#remark").val();
+		//回显产品类型
+		var productType0=window.document.getElementById("productType0");
+		var productType=window.document.getElementsByName("product");
+		var check=[];
+		for(k=0;k<productType.length;k++){
+      		if(productType[k].checked){
+           		check.push(productType[k].previousSibling.nodeValue);
+            }
+            console.log(k);
+  		}
+  		
+//   		check = check.toString();
+		productType0.innerHTML=check;
+		console.log(productType0);
+  		//check1 = check1.subString(0,check1.lastIndexOf(","));
 	}
 	function priviousPage1(){
 		$("#myTab li:eq(0) a").tab('show');
@@ -200,10 +236,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var signer = $("#signer").val();
 		var area = $("#area").val();
 		var remark=$("#remark").val();
-		/* var province = $("#province").val();
-		var province = $("#province").data;
-		var city = $("#city").val();
-		var district = $("#district").val(); */
+		//获取产品
+		var productType=window.document.getElementsByName("product");
+		var check=[];
+		for(k=0;k<productType.length;k++){
+      		if(productType[k].checked)
+            check.push(productType[k].value);
+  		}
+  		//check1 = check1.subString(0,check1.lastIndexOf(","));
+  		check = check.toString();
+  		console.log(check.toString()+"is check");
 		console.log(province+"---"+city+"----"+district);
 		$.ajax({
 			url:"<%=basePath%>project/create",
@@ -217,7 +259,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				'province':province,
 				'city':city,
  				'district':district,
- 				'remark':remark
+ 				'remark':remark,
+ 				'product':check
 			},	
 			dataType:"json",
 			success: function (data){
@@ -278,32 +321,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div style="margin-bottom: 40px;height: 40px">							
 					<button class="btn btn-success" onclick="nextPage1()" style="float: right;border-radius:0px;" type="submit">下一步</button>				
 			</div>
-			<form id="form-base">
 			<!-- 基本信息内容 -->
+			<form id="form-base">
+				<!-- 合同类型 -->
 				<div class="form-group div2">
-					<span style="margin-right: 50px;">合同类型</span>
+					<span style="margin-right: 50px;">合同类型</span>					
 					<span>
 						<input name="contract" type="radio">房地产项目
 						<input name="contract" type="radio">非房地产项目
 					</span>
 				</div>
-				<fieldset>
+				<div class="div2">
+					<span>城市公司</span>
+					<span style="color: #FF0000">*</span>
+					<input value=${orgName } disabled class="input">
+				</div>
+				<!-- 项目名称 -->
 				<div class="form-group div2">
 					<span>项目名称</span>
+					<span style="color: #FF0000">*</span>
 					<input class="input" placeholder="请输入项目名称" name="project_name" id="project_name"/>
 				</div>
-				</fieldset>
+				<!-- 开发商名称 -->
 				<div class="form-group div2">
 					<span>&nbsp&nbsp&nbsp开发商</span>
+					<span style="color: #FF0000">*</span>
 					<input class="input" placeholder="请选择开发商" id="developer" name="developer">
 				</div>
+				<!-- 甲方金额 -->
 				<div class="form-group div2">
 					<span>甲方金额</span>
+					<span style="color: #FF0000">*</span>
 					<input class="input" placeholder="请输入甲方金额" id="money" name="money">
 				</div>
+				<!-- 签单人 -->
 				<div class="form-group div2">
-					<span>&nbsp&nbsp&nbsp签单人</span>
-					<input class="input" placeholder="请输入签单人" id="signer">
+					<span>签单人</span>
+					<span style="color: #FF0000">*</span>
+				 	<select name="signer" id="dealer_id" class="input" required data-live-search="true">
+				    	<option value="" disabled selected hidden>--请选择或搜索签单人--</option>
+					    <c:forEach items="${signer}" var="signer">
+					       <option value="${signer.name }">${signer.name }</option>
+					    </c:forEach>
+				    </select>
 				</div>
 				<!-- 日历控件 -->
 <!-- 				<div class="form-group">
@@ -311,19 +371,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div> -->
 				<!-- 高德start -->				
 				<div id="tip" class="form-group div2">
-				<span style="margin-right: 30px;">项目城市</span>
+				<span>项目城市</span>
+				<span style="color: #FF0000;margin-right: 30px;">*</span>
 				    <select id='province' onchange='search(this)' class="city" name="province"></select>
-				    <select id='city' onchange='search(this)' class="city"></select>
-				    <select id='district' onchange='search1(this)' class="city"></select>
+				    <select id='city' onchange='search(this)' class="city" name="city"></select>
+				    <select id='district' onchange='search1(this)' class="city" name="district"></select>
 				</div>
-				<!-- 高德end -->			
+				<!-- 高德end -->		
+				<!-- 建筑面积 -->	
 				<div class="form-group div2">
 					<span>建筑面积</span>
-					<input class="input" placeholder="请输入建筑面积" id="area"/>
+					<span style="color: #FF0000">*</span>
+					<input class="input" placeholder="请输入建筑面积" id="area" name="area"/>
 				</div>
-				<p>
-      <input class="submit" type="submit" value="提交">
-    </p>
+				<!-- 产品类型 -->
+				<div class="form-group div2">
+					<span>产品类型</span>
+					<span style="color: #FF0000;margin-right: 1px;">*</span>
+					<span name="productType" style="margin-right: 25%;margin-left: 2%;">
+						美房圈 <input name="product" type="checkbox" id="product" value="1" style="margin-left: 5px;">
+						HVR <input name="product" type="checkbox" id="product" value="2" style="margin-left: 5px;">
+						定制化 <input name="product" type="checkbox" id="product" value="3" style="margin-left: 5px;">
+						定制化HVR <input name="product" type="checkbox" id="product" value="4" style="margin-left: 5px;">
+					</span>
+				</div>
 			</form>
 			</div>
 		</div>
@@ -342,9 +413,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<button class="btn btn-success" onclick="nextPage2()" style="float: right;border-radius:0px;">下一步</button>				
 					<button class="btn btn-success" onclick="priviousPage1()" style="float: right;border-radius:0px;">上一步</button>
 			</div>
-			<!-- depart3.2 制作内容文本框 -->			
-				制作内容:<textarea style="height: 450px;width: 650px;" id="remark"></textarea>
-			
+			<!-- depart2.2 制作内容 -->
+			<c:set var="productionType" value="${productType }"/>
+			<c:choose>
+			    <c:when test="${productionType == 1}">
+			       太惨了。
+			    </c:when>
+			    <c:when test="${salary > 1000}">
+			       不错的薪水，还能生活。
+			    </c:when>
+			    <c:otherwise>
+			        什么都没有。
+			    </c:otherwise>
+			</c:choose>
+			<!-- 制作内容标签 -->		
+			<ul id="myTab_content" class="nav nav-tabs">
+			   <!-- HVR制作内容标签 -->
+			   <li class="active"><a href="#HVR" data-toggle="tab">HVR</a></li>
+			   <!-- MFQ制作内容标签 -->
+			   <li><a href="#MFQ" data-toggle="tab">美房圈</a></li>	
+			   <!-- 定制化制作内容标签 -->
+			   <li><a href="#Customization" data-toggle="tab">定制化</a></li>		  
+			</ul>
+			<!-- 具体制作内容 -->
+			<div id="myTab_contentContent" class="tab-content">		
+				<!-- HVR制作内容 -->
+				<div class="tab-pane fade in active" id="HVR">
+					<ul class='nav nav-pills nav-stacked'>
+						<li class='active'><a href='#tab1' data-toggle='tab'>基本制作内容</a></li>
+						<li><a href='#tab2' data-toggle='tab'>制作要求备注</a></li>
+					</ul>
+					<div class='tab-content'>
+					    <div class='tab-pane active' id='tab1'>基本制作内容</div>
+					    <div class='tab-pane' id='tab2'>制作要求备注</div>
+					</div>
+				</div>
+				<!-- MFQ制作内容 -->
+				<div class="tab-pane fade" id="MFQ">
+					<ul class='nav nav-pills nav-stacked'>
+						<li class='active'><a href='#tab1' data-toggle='tab'>基本制作内容</a></li>
+						<li><a href='#tab2' data-toggle='tab'>制作要求备注</a></li>
+					</ul>
+					<div class='tab-content'>
+					    <div class='tab-pane active' id='tab1'>基本制作内容</div>
+					    <div class='tab-pane' id='tab2'>制作要求备注</div>
+					</div>
+				</div>
+				<!-- 定制化制作内容 -->
+				<div class="tab-pane fade" id="Customization">
+					<p>上传定制化文件</p>
+				</div>
+			</div>
 		</div>
 		
 		<!-- depart3 -->
@@ -371,6 +490,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="div3">
 					<label>开发商：</label>
 					<span id="developer0" style="width: auto;"></span>
+				</div>
+				<div class="div3">
+					<label>产品类型：</label>
+					<span id="productType0"></span>
 				</div>
 				<div class="div3">
 					<label>项目城市：</label>
@@ -411,15 +534,99 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            project_name: {
 	                validators: {
 	                    notEmpty: {
-	                        message: '请填写项目名',
+	                        message: '傻啊，项目名没写看不着啊',
+	                    },
+	                    stringLength: {
+	                    	max:10,
+	                    	message: '长度10位以内，整那么长干啥',
 	                    }
 	                }
-	            }
+	            },
+	            money: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '傻啊，甲方不给钱你给啊',
+	                    },
+	                }
+	            },
+	            signer: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '傻啊，签单人没写看不着啊',
+	                    },
+	                }
+	            },
+	            area: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '傻啊，建筑面积没写咋盖楼',
+	                    },
+	                }
+	            },
+	            province: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '大哥，把项目所在省写上',
+	                    },
+	                }
+	            },
+	            city: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '还有市',
+	                    },
+	                }
+	            },
+	            district: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '最后还有区',
+	                    },
+	                }
+	            },
+	            developer: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '傻啊，开发商没写看不着啊',
+	                    },
+	                    stringLength: {
+	                    	max:16,
+	                    	message: '啥破开发商，名整这么长',
+	                    }
+	                }
+	            },
+	            contract: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '选一个啊',
+	                    },
+	                }
+	            },
+	            product: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '选一个啊',
+	                    },
+	                }
+	            },
 	        }
 	    });
 	});
-	
 </script>
 </body>
-
+<script type="text/javascript">
+// 	$(document).ready(function(){
+// 		$("#dealer_id").click(function(){
+// 			var url="<%=basePath%>project/signer";
+// 			$.post(url,{},function(rd){
+//                 if(rd.flag){
+//                     layer.msg("修改成功");
+//                     window.location.reload();
+//                 }else{
+//                     layer.alert(rd.msg);
+//                 }
+//             });
+// 		});
+// 	});
+</script>
 </html>

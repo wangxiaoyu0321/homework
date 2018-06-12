@@ -12,4 +12,6 @@ public interface OrganizationInfoMapper {
     int insertSelective(OrganizationInfo record);
     
     List<OrganizationInfo> findAllLibrary();
+    
+    OrganizationInfo getOrgNameById(Integer orgId);
 }
