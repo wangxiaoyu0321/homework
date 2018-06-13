@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.jms.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +34,7 @@ public class ProjectController {
 		List<UserEntity> signer = ps.getSigner();
 		log.info("------------------------"+signer+"-------------------------");
 		model.addAttribute("signer",signer);
+		model.addAttribute("flag",0);
 		return "project/createproject";
 
 	}
@@ -76,10 +78,15 @@ public class ProjectController {
 		
 		return resultMap;
 	}
-	@RequestMapping("/demo")
-	public String toDemo(){
-		return "demo";
-		
+	@RequestMapping("/getProductType")
+	public String toGetProductType(HttpServletRequest request,Model model){
+		String productType=request.getParameter("product");
+		log.info(productType);
+		request.setAttribute("productType", productType);
+		request.getSession().setAttribute("productType", productType);
+		model.addAttribute("productType",productType);
+		model.addAttribute("flag",1);
+		return "project/createproject";		
 	}
 
 }

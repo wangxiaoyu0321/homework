@@ -3,6 +3,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String abc = "";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -92,23 +93,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </style>
 
 <script type="text/javascript">
+
+	$(document).ready(function(){
+		var flag = $("#test").val();
+		if(flag == 0){
+		}else if(flag == 1){
+			$("#myTab li:eq(1) a").tab('show');
+		}else{
+			alert("网络错误");
+		}
+	});	
+
+	var productType = "";
+	
 	function nextPage1(){
-// 		$('#form-base').bootstrapValidator('validate');
-// 			if ($("#form-base").data('bootstrapValidator').isValid()) {
+		//项目信息验证
+// 		$('#form_base').bootstrapValidator('validate');
+// 			if ($("#form_base").data('bootstrapValidator').isValid()) {
 // 				$("#myTab li:eq(1) a").tab('show');
 // 		}
-
-		$("#myTab li:eq(1) a").tab('show');
+		
+ 		$("#myTab li:eq(1) a").tab('show');
 		var productType = window.document.getElementsByName("product");
      	var s=[];//如果这样定义var s;变量s中会默认被赋个null值
         for(var i=0;i<productType.length;i++){
 			if(productType[i].checked) //取到对象数组后，我们来循环检测它是不是被选中
-            check.push(productType[k].value);
-				s+=productType[i].value;  //如果选中，将value添加到变量s中  
+            s.push(productType[i].value);
+				s+productType[i].value;  //如果选中，将value添加到变量s中  
      	}
      	productType=s;
-      	console.log(s);
+      	console.log("---产品类型"+productType);
+      	$("#right-main").load('<%=basePath%>project/getProductType?product='+productType);
 	}
+	
+	
+	
 	function nextPage2(){
 		//制作说明书
 		$("#myTab li:eq(2) a").tab('show');
@@ -278,11 +297,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			});
 	};
+	
 </script>
 
 </head>
 <body>
 <div class="div">
+	<input type="text" id="test" value=${flag } style="display:none">
 	<!-- 选项卡菜单start-->
 	<ul id="myTab" class="nav nav-tabs" role="tablist" style="border: 0px;">
 	    <li class="active li0" class="li0">
@@ -290,13 +311,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   		<span class="span1">1</span>
 	   		<span>基本信息填写</span>
 	    </a>
-	    </li class="li0">
-	    <li >
+	    </li>
+	    <li>
 	    <a href="#rule" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
 	   		<span class="span1">2</span>
 	   		<span>制作内容备注</span>
 	    </a>
-	    </li class="li0">
+	    </li>
 	    <li class="li0"><a href="#forum" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
 	    	<span class="span1">3</span>
 	   		<span>制作说明书</span>
@@ -319,10 +340,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<!-- depart 1.3表单 -->
 			<div>
 			<div style="margin-bottom: 40px;height: 40px">							
-					<button class="btn btn-success" onclick="nextPage1()" style="float: right;border-radius:0px;" type="submit">下一步</button>				
+				<button class="btn btn-success" onclick="nextPage1()" style="float: right;border-radius:0px;" type="submit">下一步</button>				
 			</div>
 			<!-- 基本信息内容 -->
-			<form id="form-base">
+			<form id="form_base" name="form_base">
 				<!-- 合同类型 -->
 				<div class="form-group div2">
 					<span style="margin-right: 50px;">合同类型</span>					
@@ -413,55 +434,71 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<button class="btn btn-success" onclick="nextPage2()" style="float: right;border-radius:0px;">下一步</button>				
 					<button class="btn btn-success" onclick="priviousPage1()" style="float: right;border-radius:0px;">上一步</button>
 			</div>
-			<!-- depart2.2 制作内容 -->
-			<c:set var="productionType" value="${productType }"/>
-			<c:choose>
-			    <c:when test="${productionType == 1}">
-			       太惨了。
-			    </c:when>
-			    <c:when test="${salary > 1000}">
-			       不错的薪水，还能生活。
-			    </c:when>
-			    <c:otherwise>
-			        什么都没有。
-			    </c:otherwise>
-			</c:choose>
-			<!-- 制作内容标签 -->		
-			<ul id="myTab_content" class="nav nav-tabs">
-			   <!-- HVR制作内容标签 -->
-			   <li class="active"><a href="#HVR" data-toggle="tab">HVR</a></li>
-			   <!-- MFQ制作内容标签 -->
-			   <li><a href="#MFQ" data-toggle="tab">美房圈</a></li>	
-			   <!-- 定制化制作内容标签 -->
-			   <li><a href="#Customization" data-toggle="tab">定制化</a></li>		  
+			<!-- depart2.2 制作内容 -->	
+			<ul id="myTab_content" class="nav nav-tabs" style="border-bottom: 0px;">			  				  			  		  			
+				<c:forEach var="productType" items="${productType}">	
+					<c:choose>
+					    <c:when test="${productType ==1}">
+					       	<!-- MFQ制作内容标签 -->
+				   			<li><a href="#MFQ" data-toggle="tab">美房圈</a></li>
+					    </c:when>	
+					    <c:when test="${productType ==2}">
+					    	<!-- HVR制作内容标签 -->
+				   			<li><a href="#HVR" data-toggle="tab">HVR</a></li>
+					    </c:when>	
+					    <c:when test="${productType ==3}">
+					    	 <!-- 定制化制作内容标签 -->
+				   			 <li><a href="#Customization" data-toggle="tab">定制化</a></li>
+					    </c:when>
+					    <c:when test="${productType ==4}">
+					    	 <!-- 定制化HVR制作内容标签 -->
+				   			 <li><a href="#CustomizationHVR" data-toggle="tab">定制化HVR</a></li>
+					    </c:when>
+					</c:choose>
+				</c:forEach>
 			</ul>
+			<!-- 制作内容标签 -->		
+<!-- 			<ul id="myTab_content" class="nav nav-tabs"> -->
+			   <!-- HVR制作内容标签 -->
+<!-- 			   <li class="active"><a href="#HVR" data-toggle="tab">HVR</a></li> -->
+			   <!-- MFQ制作内容标签 -->
+<!-- 			   <li><a href="#MFQ" data-toggle="tab">美房圈</a></li>	 -->
+			   <!-- 定制化制作内容标签 -->
+<!-- 			   <li><a href="#Customization" data-toggle="tab">定制化</a></li> -->
+			   <!-- 定制化HVR制作内容标签 -->
+<!-- 			   <li><a href="#CustomizationHVR" data-toggle="tab">定制化HVR</a></li>		   -->
+<!-- 			</ul> -->
 			<!-- 具体制作内容 -->
 			<div id="myTab_contentContent" class="tab-content">		
-				<!-- HVR制作内容 -->
-				<div class="tab-pane fade in active" id="HVR">
-					<ul class='nav nav-pills nav-stacked'>
-						<li class='active'><a href='#tab1' data-toggle='tab'>基本制作内容</a></li>
-						<li><a href='#tab2' data-toggle='tab'>制作要求备注</a></li>
-					</ul>
-					<div class='tab-content'>
-					    <div class='tab-pane active' id='tab1'>基本制作内容</div>
-					    <div class='tab-pane' id='tab2'>制作要求备注</div>
-					</div>
-				</div>
 				<!-- MFQ制作内容 -->
 				<div class="tab-pane fade" id="MFQ">
 					<ul class='nav nav-pills nav-stacked'>
-						<li class='active'><a href='#tab1' data-toggle='tab'>基本制作内容</a></li>
-						<li><a href='#tab2' data-toggle='tab'>制作要求备注</a></li>
+						<li class='active'><a href='#tab1' data-toggle='tab'>MFQ基本制作内容</a></li>
+						<li><a href='#tab2' data-toggle='tab'>MFQ制作要求备注</a></li>
 					</ul>
 					<div class='tab-content'>
-					    <div class='tab-pane active' id='tab1'>基本制作内容</div>
-					    <div class='tab-pane' id='tab2'>制作要求备注</div>
+					    <div class='tab-pane active' id='tab1'>MFQ制作要求内容</div>
+					    <div class='tab-pane' id='tab2'>MFQ制作要求备注</div>
+					</div>
+				</div>
+				<!-- HVR制作内容 -->
+				<div class="tab-pane fade" id="HVR">
+					<ul class='nav nav-pills nav-stacked'>
+						<li class='active'><a href='#tab1' data-toggle='tab'>HVR基本制作内容</a></li>
+						<li><a href='#tab2' data-toggle='tab'>HVR制作要求备注</a></li>
+					</ul>
+					<div class='tab-content'>
+					    <div class='tab-pane active' id='tab1'>HVR基本制作内容</div>
+					    <div class='tab-pane' id='tab2'>HVR制作要求备注</div>
 					</div>
 				</div>
 				<!-- 定制化制作内容 -->
 				<div class="tab-pane fade" id="Customization">
 					<p>上传定制化文件</p>
+				</div>
+				<!-- 定制化HVR内容 -->
+				<div class="tab-pane fade" id="CustomizationHVR">
+					<p>上传定制化HVR文件</p>
 				</div>
 			</div>
 		</div>
@@ -523,7 +560,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 	//表单验证
 	$(document).ready(function() {		
-	    $('#form-base').bootstrapValidator({
+	    $('#form_base').bootstrapValidator({
 	        message: 'This value is not valid',
 	        feedbackIcons: {
 	            valid: 'glyphicon glyphicon-ok',
