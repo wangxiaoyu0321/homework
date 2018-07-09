@@ -19,6 +19,9 @@
 	.error {
 		background: #f2dede;
 	}
+	.btn {
+		height: 34px;
+	}
 </style>
 </head>
 <body>
@@ -28,16 +31,10 @@
 	<!-- div1：标题 -->
 	<div style="height:auto;padding-bottom: 60px;">
 		<div class="btn-group" data-toggle="buttons" style="float: right">
-			<button class="btn btn-success" style="border-radius:0px">
-				<span>新增</span>
-			</button>
-			<button class="btn btn-warning">
-				<span> 编辑 </span>
-			</button>
-			<button class="btn btn-danger">
-				<span>删除</span>
-			</button>
-			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" style="border-radius:0px">分配权限</button>
+			<button class="btn btn-success" style="border-radius:0px">新增</button>
+			<button class="btn btn-warning">编辑</button>
+			<button class="btn btn-danger">删除</button>
+			<button class="btn btn-info" type="button" data-toggle="modal" data-target="#myModal" style="border-radius:0px">分配权限</button>
 		</div>
 	</div>
 	<!-- div2：表单 -->

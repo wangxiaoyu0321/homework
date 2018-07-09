@@ -1,5 +1,6 @@
+/* 顶部导航栏 */
 .div-top .navbar {
-	background-color: #036;
+	background-color: #438eb9;
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 0px;
@@ -9,16 +10,18 @@
 }
 .div-content {
 	background-color: #f5f5f5;
-	height: 95%;
+	margin-top: 50px;
 	width: 100%;
 	position: absolute;
 	margin-top: 0px;
 	margin-bottom: 0px;
+	height: 100%;
 }
 .container-fluid{
 	margin-left: 0px;
 	margin-right: 0px;
 }
+/* 顶端导航栏高度 */
 .navbar{
 	height: 5%;
 }
@@ -26,12 +29,19 @@
 	 color: white;   
 	 border-color: white; 
 }
+.navbar-header {
+	width: 10%;
+}
+#navbar-right {
+	width: 90%;
+	height: 50px;
+}
 .navbar .navbar-header > a{
 	margin-left:0px;
 	color:white;
 }
 .navbar .nav > li > a:hover {
-  	color: red;
+  	color: aqua;
 	background-color: #000000;
 }	
 .navbar .navbar-brand:hover{
@@ -39,70 +49,74 @@
 	background-color: #000000;
 }
 .sidebar-fold{
-	height: 30px;
-	width: 160px;
+	height: 40px;
+	width: 100%;
 	text-align: center;
-	background-color: #394555;
+	background-color: #FFFFFF;
 }
 
 .div-main {
 	top: 0px;
 	bottom: 0px;
-	width: 160px;
-	background-color: #293038;
+	height:auto;
+	width: 10%;
+	background-color: #f5f5f5;
 	position: absolute;
 	z-index: 100;
+	border-right: solid 1px #DCDCDC;
 }
-.right-main {
+/* .right-main {
 	position: absolute;
 	bottom: 0px;
 	top: 0px;
-}
+} */
 .left-main {
-	
+	height: auto;
 }
 .left-main>li{
 	height: 40px;
-	width: 160px;
+	width: 100%;
+/* 	background-color: #f9f9f9; */
+	border-bottom: solid 1px #DCDCDC;
+	list-sytle:none;
 }
 .left-main>li:hover{
 	height: 40px;
-	width: 160px;
+	width: 100%;
 	background-color: red;
 }
 .left-main>li:active{
 	height: 40px;
-	width: 160px;
+	width: 100%;
 	background-color: #394555;
 }	
 .left-main>li>a{
 	height: 40px;
-	width: 160px;
+	width: 100%;
 	margin-left:-15px;
 }
 .left-main .glyphicon{
 	width: 48px;
 	line-height: 36px;
 	text-align: center;
-	color:#fff;
+	color:#696969;
 }
 .sidebar-fold .glyphicon{
-	width: 30px;
-	line-height: 30px;
 	font-size:12px;
 	text-align: center;
-	color:#fff;
+	color:#FFFFFF;
 }
 .left-main .sub-title{
 	width: 48px;
 	line-height: 36px;
 	text-align: center;
-	color:#fff;
+	color: #808080;
 }
 .right-main {
-	left:160px;
-	right:0px;
+	width: 90%;
 	text-align: center;
+	float: right;
+	height: 100%;
 }
 table,th,td
 {

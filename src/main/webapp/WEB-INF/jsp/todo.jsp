@@ -15,7 +15,7 @@
 	<!-- 引入顶端导航栏 -->
 	<%@include file="topNav.jsp"%>	
 	<!-- 引入左侧导航栏 -->
-	<%@include file="LeftList.jsp"%>
+	<jsp:include page="LeftList.jsp"/>
 <style type="text/css">
 	h2{
 		color: #00BFFF;

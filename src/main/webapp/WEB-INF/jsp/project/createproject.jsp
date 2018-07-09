@@ -9,11 +9,15 @@ String abc = "";
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_234130_nem7eskcrkpdgqfr.css">
 <script src="${pageContext.request.contextPath }/js/bootstrapValidator.js" type="text/javascript"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/CSS/bootstrapValidator.css">
-
+<script type="text/javascript" src="../js/schedule.js"></script>
 <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script> 
+<!-- 引入上传文件控件 -->
+<script type="text/javascript" src="../js/fileinput.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/CSS/fileinput.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/CSS/fileinput-rtl.min.css">
 <!-- 引入表单验证js -->
 <!-- <script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script> -->
 <!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script> -->
@@ -32,12 +36,12 @@ String abc = "";
 	.div3 {
 		margin-top: 20px;
 	}
-	li {
-		height: 10%;
-		width: 33%;
-		border: 0px;
-		border-color: white;
-	}
+	.li0 { 
+ 		height: 10%; 
+ 		width: 33%; 
+ 		border: 0px; 
+ 		border-color: white; 
+ 	}
 	.span1 {
 		height: 45px;
 		width: 45px;
@@ -90,6 +94,112 @@ String abc = "";
 	.error {
 		color: red;
 	}
+	.li-tab{
+		width: 20%;
+		font-size:14px;
+		height: 40px;
+		border-radius:0px;
+		background-color: #9400D3;
+	}
+	.a-tab {
+		height: 40px;
+		color: white;
+		background-color: #9400D3;
+		border: 0px;
+		border-radius:0px;
+		background-color: #9400D3;
+	}
+	.nav-tabs>li>a {
+		border: 0px;
+		border-radius:0px;
+	}
+	.nav-tabs>li.active>a:hover {
+		border: 0px;
+		background-color: #9400D3;
+	}
+	.nav-tabs>li.active>a {
+		border: 0px;
+	}
+</style>
+<!-- 日历控件样式 -->
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	ul{
+		list-style: none;
+	}
+	#schedule-box{
+		width: 240px;
+		height:260px;
+/* 		margin: 0 auto; */
+		padding: 35px 20px;
+		font-size: 13px;
+	}
+	.schedule-hd{
+		display: flex;
+		justify-content: space-between;
+		padding: 0 15px;
+	}
+	.today{
+		flex: 1;
+		text-align: center;
+		color: #FF0000;
+	}
+	.ul-box{
+		overflow: hidden;
+	}
+	.ul-box > li{
+		float: left;
+		width: 14.28%;
+		text-align: center;
+		padding: 5px 0;
+	}
+	.other-month{
+		color: #999999;
+	}
+	.current-month{
+		color: #333333;
+	}
+	.today-style{
+		border-radius: 50%;
+		background: #58d321;
+	}
+	.arrow{
+		cursor: pointer;
+	}
+	.dayStyle{
+		display: inline-block;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		text-align: center;
+		line-height: 28px;
+		cursor: pointer;
+	}
+	.current-month > .dayStyle:hover{
+		background: #00BDFF;
+		color: #ffffff;
+	}
+	.today-flag{
+		background: #fff;
+		color: black;
+	}
+	.boxshaw{
+		box-shadow: 2px 2px 15px 2px #e3e3e3;
+	}
+	.selected-style {
+		background: #00BDFF;
+		color: #ffffff;
+	}
+	#h3Ele{
+		text-align: center;
+		padding: 10px;
+	}
+	#calendar_body{
+		height: 240px;
+	}
 </style>
 
 <script type="text/javascript">
@@ -122,12 +232,29 @@ String abc = "";
 				s+productType[i].value;  //如果选中，将value添加到变量s中  
      	}
      	productType=s;
-      	console.log("---产品类型"+productType);
-      	$("#right-main").load('<%=basePath%>project/getProductType?product='+productType);
+     	var jsObject = JSON.parse(productType);
+     	console.log(jsObject);
+      	$.ajax({
+      		url: "<%=basePath%>project/getProduction",
+      		type: "POST",
+      		data:{'productType': jsObject},
+      		dataType:"json",
+      		async: false,
+      		success:function(data){
+      			console.log(data.operFlag);
+      			$("#right-main").load('<%=basePath%>project/getProductType?product='+productType);  	
+      		},
+      		error:function(data){
+      			alert("获取制作内容异常");
+      			console.log(data.operFlag);
+      			console.log(data);
+      			$("#right-main").load('<%=basePath%>project/getProductType?product='+productType);
+      		}
+      	});  
+
 	}
 	
-	
-	
+		
 	function nextPage2(){
 		//制作说明书
 		$("#myTab li:eq(2) a").tab('show');
@@ -302,7 +429,7 @@ String abc = "";
 
 </head>
 <body>
-<div class="div">
+<div class="div" style="overflow: auto;">
 	<input type="text" id="test" value=${flag } style="display:none">
 	<!-- 选项卡菜单start-->
 	<ul id="myTab" class="nav nav-tabs" role="tablist" style="border: 0px;">
@@ -312,7 +439,7 @@ String abc = "";
 	   		<span>基本信息填写</span>
 	    </a>
 	    </li>
-	    <li>
+	    <li class="li0">
 	    <a href="#rule" role="tab" data-toggle="tab" style="border: 0px;margin-top: 20px;">
 	   		<span class="span1">2</span>
 	   		<span>制作内容备注</span>
@@ -387,9 +514,15 @@ String abc = "";
 				    </select>
 				</div>
 				<!-- 日历控件 -->
-<!-- 				<div class="form-group">
-					日期：<input class="Wdate" onFocus="calendar({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm',minDate:new Date(),})" name="date"/>   
-				</div> -->
+				<div class="form-group div2">
+					<span>选择日期</span>
+					<span style="color: #FF0000">*</span>
+					<input placeholder="请选择日期" onclick="calendar()" id="date" class="input" value="" readonly="readonly">
+					<div id='schedule-box' class="boxshaw" style="display: none;"></div>		
+						<div style="display: none">
+							<h3 id='h3Ele'></h3>
+						</div>
+				</div>
 				<!-- 高德start -->				
 				<div id="tip" class="form-group div2">
 				<span>项目城市</span>
@@ -407,14 +540,18 @@ String abc = "";
 				</div>
 				<!-- 产品类型 -->
 				<div class="form-group div2">
-					<span>产品类型</span>
-					<span style="color: #FF0000;margin-right: 1px;">*</span>
-					<span name="productType" style="margin-right: 25%;margin-left: 2%;">
-						美房圈 <input name="product" type="checkbox" id="product" value="1" style="margin-left: 5px;">
-						HVR <input name="product" type="checkbox" id="product" value="2" style="margin-left: 5px;">
-						定制化 <input name="product" type="checkbox" id="product" value="3" style="margin-left: 5px;">
-						定制化HVR <input name="product" type="checkbox" id="product" value="4" style="margin-left: 5px;">
-					</span>
+					<div style="float: left;margin-left: 26.5%;">
+						<span>产品类型</span>
+						<span style="color: #FF0000;margin-right: 1px;">*</span>
+					</div>
+					<div style="margin-right: 50%">
+						<span name="productType">											
+							<input name="product" type="checkbox" value="1" style="height: 15px;width: 15px;vertical-align: text-top;;margin-top: 0px;"> 美房圈&nbsp&nbsp					
+							<input name="product" type="checkbox" value="2" style="height: 15px;width: 15px;vertical-align: text-top;;margin-top: 0px;"> HVR&nbsp&nbsp 
+							<input name="product" type="checkbox" value="3" style="height: 15px;width: 15px;vertical-align: text-top;;margin-top: 0px;"> 定制化&nbsp&nbsp
+							<input name="product" type="checkbox" value="4" style="height: 15px;width: 15px;vertical-align: text-top;;margin-top: 0px;"> 定制化HVR
+						</span>
+					</div>
 				</div>
 			</form>
 			</div>
@@ -435,24 +572,25 @@ String abc = "";
 					<button class="btn btn-success" onclick="priviousPage1()" style="float: right;border-radius:0px;">上一步</button>
 			</div>
 			<!-- depart2.2 制作内容 -->	
+			<!-- 制作内容选项卡标签 -->
 			<ul id="myTab_content" class="nav nav-tabs" style="border-bottom: 0px;">			  				  			  		  			
 				<c:forEach var="productType" items="${productType}">	
 					<c:choose>
 					    <c:when test="${productType ==1}">
 					       	<!-- MFQ制作内容标签 -->
-				   			<li><a href="#MFQ" data-toggle="tab">美房圈</a></li>
+				   			<li class="li-tab"><a href="#MFQ" data-toggle="tab" class="a-tab">美房圈</a></li>
 					    </c:when>	
 					    <c:when test="${productType ==2}">
 					    	<!-- HVR制作内容标签 -->
-				   			<li><a href="#HVR" data-toggle="tab">HVR</a></li>
+				   			<li class="li-tab"><a href="#HVR" data-toggle="tab" class="a-tab">HVR</a></li>
 					    </c:when>	
 					    <c:when test="${productType ==3}">
 					    	 <!-- 定制化制作内容标签 -->
-				   			 <li><a href="#Customization" data-toggle="tab">定制化</a></li>
+				   			 <li class="li-tab"><a href="#Customization" data-toggle="tab" class="a-tab">定制化</a></li>
 					    </c:when>
 					    <c:when test="${productType ==4}">
 					    	 <!-- 定制化HVR制作内容标签 -->
-				   			 <li><a href="#CustomizationHVR" data-toggle="tab">定制化HVR</a></li>
+				   			 <li class="li-tab"><a href="#CustomizationHVR" data-toggle="tab" class="a-tab">定制化HVR</a></li>
 					    </c:when>
 					</c:choose>
 				</c:forEach>
@@ -477,7 +615,11 @@ String abc = "";
 						<li><a href='#tab2' data-toggle='tab'>MFQ制作要求备注</a></li>
 					</ul>
 					<div class='tab-content'>
-					    <div class='tab-pane active' id='tab1'>MFQ制作要求内容</div>
+					    <div class='tab-pane active' id='tab1'>MFQ制作要求内容
+						    <c:forEach items="${productions }" var="production">
+								<td>${production.productionName }</td>
+							</c:forEach>
+						</div>
 					    <div class='tab-pane' id='tab2'>MFQ制作要求备注</div>
 					</div>
 				</div>
@@ -488,19 +630,29 @@ String abc = "";
 						<li><a href='#tab2' data-toggle='tab'>HVR制作要求备注</a></li>
 					</ul>
 					<div class='tab-content'>
-					    <div class='tab-pane active' id='tab1'>HVR基本制作内容</div>
-					    <div class='tab-pane' id='tab2'>HVR制作要求备注</div>
+					    <div class='tab-pane active' id='tab1'>HVR
+	  						<c:forEach items="${sessionScope.productions }" var="production">
+								<td>${production.productionName }</td>
+							</c:forEach>
+						</div>
+					    <div class='tab-pane' id='tab2'></div>
 					</div>
 				</div>
 				<!-- 定制化制作内容 -->
 				<div class="tab-pane fade" id="Customization">
 					<p>上传定制化文件</p>
+					<div class="file-loading"> 
+					    <input id="input-b6" name="input-b6[]" type="file" multiple>
+					</div>
 				</div>
 				<!-- 定制化HVR内容 -->
 				<div class="tab-pane fade" id="CustomizationHVR">
 					<p>上传定制化HVR文件</p>
+					<input id="input-b2" name="input-b2" type="file" class="file" data-show-preview="false">
 				</div>
 			</div>
+			<!-- 上传图片 -->
+			
 		</div>
 		
 		<!-- depart3 -->
@@ -555,8 +707,9 @@ String abc = "";
 	    </div>
 		</div>
 		
-    </div>		
-
+    </div>	
+    	
+<!-- 表单验证 -->
 <script type="text/javascript">
 	//表单验证
 	$(document).ready(function() {		
@@ -650,20 +803,57 @@ String abc = "";
 	    });
 	});
 </script>
-</body>
-<script type="text/javascript">
-// 	$(document).ready(function(){
-// 		$("#dealer_id").click(function(){
-// 			var url="<%=basePath%>project/signer";
-// 			$.post(url,{},function(rd){
-//                 if(rd.flag){
-//                     layer.msg("修改成功");
-//                     window.location.reload();
-//                 }else{
-//                     layer.alert(rd.msg);
-//                 }
-//             });
-// 		});
-// 	});
+
+<!-- 日历  -->
+<script>
+	function calendar(){
+		//取消冒泡事件
+        event.stopPropagation();//这句是必须
+		document.getElementById("schedule-box").style.display="";
+		var mySchedule = new Schedule({
+			el: '#schedule-box',
+			//date: '2018-9-20',
+			clickCb: function (y,m,d) {
+				document.querySelector('#h3Ele').innerHTML = /* '日期：'+ */y+'-'+m+'-'+d	
+			},
+			nextMonthCb: function (y,m,d) {
+				document.querySelector('#h3Ele').innerHTML = /* '日期：'+ */y+'-'+m+'-'+d	
+			},
+			nextYeayCb: function (y,m,d) {
+				document.querySelector('#h3Ele').innerHTML =/*  '日期：'+ */y+'-'+m+'-'+d	
+			},
+			prevMonthCb: function (y,m,d) {
+				document.querySelector('#h3Ele').innerHTML =/*  '日期：'+ */y+'-'+m+'-'+d	
+			},
+			prevYearCb: function (y,m,d) {
+				document.querySelector('#h3Ele').innerHTML =/*  '日期：'+ */y+'-'+m+'-'+d	
+			}
+		});
+			return false;
+    };	
+      //点击空白或者其他区域时divTop隐藏
+      $("#schedule-box").click(function(event) {
+        event.stopPropagation(); //阻止事件向上冒泡
+    });
+    $(document).click(function(){
+	    $("#schedule-box").slideUp('slow');
+	    var id=$("#h3Ele").text();
+	    document.getElementById("date").value=id;
+		console.log(id);
+    });
 </script>
+
+<!-- 图片上传  -->
+<script>
+$(document).ready(function(){
+    $("#input-b6").fileinput({
+        showUpload: true,
+        dropZoneEnabled: false,
+        maxFileCount: 10,
+        mainClass: "input-group-lg"
+    });
+});
+</script>
+
+</body>
 </html>

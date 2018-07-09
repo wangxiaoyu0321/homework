@@ -27,7 +27,7 @@
     	
     <javaClientGenerator targetPackage="com.dao" targetProject="homework" type="XMLMAPPER">
     </javaClientGenerator>
-    <table schema="homework" tableName="productType" >
+    <table schema="homework" tableName="developers_info" >
       <!-- <columnOverride column="???" property="???" /> -->
     </table>
   </context>

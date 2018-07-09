@@ -5,6 +5,7 @@
 <head>
 	<title>个人中心</title>
 	<meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css"> 
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -15,7 +16,7 @@
 	<!-- 引入顶端导航栏 -->
 	<%@include file="topNav.jsp"%>	
 	<!-- 引入左侧导航栏 -->
-	<%@include file="LeftList.jsp"%>
+	<jsp:include page="personal/left.jsp"/>
 </head>
 <script type="text/javascript">
 	//光标切换
@@ -58,12 +59,9 @@
      });
    };
 </script>
-<body>
-    <div class="right-main" style="float:left;margin-left:0px;margin-top:50px;">
+<body style="overflow: hidden;">
+    <div class="right-main" style="float:right;margin-left:0px;">
 		<h1>${name}的 个人中心</h1><h2>组织ID：${orgId }，隶属部门${sessionScope.orgName}</h2>
-		<div style="text-align: left;margin-left: 20px;">
-			<img src="${image }" style="height: 150px;width: 150px;border-radius: 50%">
-		</div>
 		<div style="text-align: left;margin-left: 20px;margin-top: 20px;">
 			<form enctype="multipart/form-data" id="form" method="post">
 				<label>上传头像：</label><input type="file" name="file"><br/>

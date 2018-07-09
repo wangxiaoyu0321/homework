@@ -12,77 +12,53 @@
 	<%@include file="FileList.jsp"%>
 	<!-- 引入顶端导航栏 -->
 	<%@include file="topNav.jsp"%>	
+	
+	<jsp:include page="system/systemLeft.jsp"></jsp:include>
 	<title>System Management</title>
-<style type="text/css">
-	html{
-		height: 100%;
-	}
-	body {
-		background-color: #ffffff;
-		height: 100%;
-	}
-	div {
-	}
-	.left-main{
-		background-color: #293038;
-		margin-bottom: 0px;
-		bottom: 0px;
-		top:0px;
-		height: 100%;
-	}
-	.right {
-		float: left;
-		height: 100%;
-		width: 1743px;
-	}
-	li{
-		line-height:40px;
-		text-align:left;
-	}
-	a {
-		margin-left: -15px;
-	}
-	span{
-		height: 36px;
-	}
-	.li:HOVER {
-		background-color: red;
-	}
-	.cur {
-		background-color: red;
-	}
-</style>
+	<style type="text/css">
+		html{
+			height: 100%;
+		}
+		body {
+			background-color: #ffffff;
+			height: 100%;
+		}
+		.left-main{
+	/* 		background-color: #293038; */
+			margin-bottom: 0px;
+			bottom: 0px;
+			top:0px;
+			height: 100%;
+		}
+		.right {
+			float: left;
+			height: 100%;
+			width: 1743px;
+		}
+/* 		li{ */
+/* 			line-height:40px; */
+/* 			text-align:left; */
+/* 		} */
+/* 		a { */
+/* 			margin-left: -15px; */
+/* 		} */
+		span{
+			height: 36px;
+		}
+		.li:HOVER {
+			background-color: red;
+		}
+		#right {
+			width: 90%;
+			float: right;
+		}
+	</style>
 </head>
-<script>
-$(function(){
-	var cotrs =$(".li");
-	cotrs.click(function(){
-		cotrs.removeClass("cur"); 
-		$(this).addClass("cur");
-                return false;
-	});
-});
-</script>
+
 <body>
-<!-- 左侧列表 -->
-<div style="height:924px;;width: 100%;">
-<div class="left-main left-full" id="left" style="margin-top: 0px; float: left;">	
-	<div class="sidebar-fold">
-		<span class="glyphicon glyphicon-menu-hamburger"></span>
-	</div>	
-	<div class=>			
-		<li id="user" class="li"><a><span class="glyphicon glyphicon-user"></span><span class="sub-title">用户管理</span></a></li>
-		<li id="role" class="li"><a><span class="glyphicon glyphicon-bookmark"></span><span class="sub-title">角色管理</span></a></li>
-		<li id="organization" class="li"><a><span class="glyphicon glyphicon-th"></span><span class="sub-title">组织管理</span></a></li>
-		<li id="permission" class="li"><a><span class="glyphicon glyphicon-bell"></span><span class="sub-title">权限管理</span></a></li>
-	</div>	
-</div>
-
-<!-- 右侧内容 -->
-<div class="right" id="right">
-
-</div>
-</div>
+	<div id="right">
+	
+	</div>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){

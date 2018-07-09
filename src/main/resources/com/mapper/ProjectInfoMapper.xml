@@ -84,7 +84,7 @@
     id, proName, province, city, creater, signer, orgId, productType, quotePrice, agreement, 
     state, createTime, spare1, spare2, spare3
   </sql>
-
+  <!-- 根据主键查询项目 -->	
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -111,6 +111,27 @@
       #{spare1,jdbcType=VARCHAR}, #{spare2,jdbcType=VARCHAR}, #{spare3,jdbcType=VARCHAR}
       )
   </insert>
+  
+  <!-- 获取项目列表 -->
+  <select id="getProjectList" parameterType="com.entity.ProjectInfo" resultType="com.entity.ProjectInfo">
+  	SELECT * FROM project_info
+  	<where>
+	  	<if test="ue.orgId != null and ue.orgId != ''">
+	  		orgId=#{ue.orgId}
+	  	</if>
+	  	<if test="page.startIndex >=0 and page.pageSize >0">
+	  		limit #{page.startIndex},#{page.pageSize}
+	  	</if>
+  	</where>
+  </select>
+  
+  <!-- 获取项目总数 -->
+  <select id="getProjectCount" resultType="int" parameterType="Integer">
+	SELECT COUNT(*) FROM project_info
+	<if test="orgId != null and orgId != ''">
+		WHERE orgId=#{orgId}
+	</if>
+  </select>
   
   <insert id="insertSelective" parameterType="com.entity.ProjectInfo" >
     insert into project_info

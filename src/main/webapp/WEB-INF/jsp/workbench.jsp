@@ -8,78 +8,65 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
   	<!-- 引入CSS -->  
+   	<jsp:include page="topNav.jsp"/>
    	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css"> 
 	<!-- 引入bootstrap -->
  	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js" type="text/javascript" language="javascript"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>管理系统</title>
+    <title>工作台</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">	
-<style type="text/css">
-	.div-content {
-		background-color: #f5f5f6;
-		padding: 20px;
-	}
-	h3 {
-		font-size: 14px;
-	}
-	.div_todo {
-		width: 50%;
-		background-color: white;
-		height: 20%;
-		padding: 1px 12px;
-	}
-	.div_td {
-		background-color:#F5F5F5;
-		height: 65%;
-		width: 30%;
-		margin-right: 18px;
-		padding-top: 4%;
-	}
-	.div_tp {
-		height: 27%;
-		background-color:#F5F5F5;
-		color: #A9A9A9;
-	}
-</style>
+	<style type="text/css">
+		.div-content {
+			background-color: #f5f5f6;
+			padding: 20px;
+			padding-top: 30px;
+		}
+		h3 {
+			font-size: 14px;
+		}
+		.div_todo {
+			width: 50%;
+			background-color: white;
+			height: 20%;
+			padding: 1px 12px;
+		}
+		.div_td {
+			background-color:#F5F5F5;
+			height: 65%;
+			width: 30%;
+			margin-right: 18px;
+			padding-top: 4%;
+		}
+		.div_tp {
+			height: 27%;
+			background-color:#F5F5F5;
+			color: #A9A9A9;
+			height: 28%;
+		}
+		.div-content {
+			padding:20px 30px;
+		}
+		.navbar-brand {
+			color: #FFFFFF;
+		}
+		.div_td:HOVER {
+			box-shadow:0 0 1px #00BFFF;
+		}
+		.div_tp:hover {
+			box-shadow:0 0 1px #00BFFF;
+		}
+	</style>
   </head>
   
-  <body>
-  <div>
-  	<!-- div1:顶端导航栏 -->
-  	<div class="div-top">
-    <nav class="navbar" role="navigation">
-		<div class="navbar-header">			
-			<a class="navbar-brand" href="<%=basePath%>user/workbench">管理控制台</a>
-		</div>
- 		<div>
-			<ul class="nav navbar-nav" id="nav">
-				<li><a href="<%=basePath%>user/index">在线办公</a></li>
-				<li><a href="#">需求管理</a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						项目管理
-						<b class="caret"></b>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">前端</a></li>
-						<li><a href="#">后端</a></li>
-						<li><a href="#">SQL</a></li>
-					</ul>
-				</li>
-				<li><a href="<%=basePath%>system/SystemManagement">系统管理</a></li>
-			</ul>
-		</div>
-		<span style="position: absolute;right:80px;top:15px;;">
-			<a href="${pageContext.request.contextPath}/user/outLogin" style="color: white;">退出</a>
-		</span>
-	</nav>
-	</div>	
-	<!-- div2：底部内容 -->
+  <body style="overflow: hidden;">
+  	<!-- part1:顶端导航栏 -->
+		
+	<!-- part2：主题内容 -->
 	<div class="div-content">
 		<div class="div_todo">
 			<div style="float:left;width: 60%">
@@ -104,7 +91,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 	</div>
- </div>	
 </body>
 <script>
 $(document).ready(function(){

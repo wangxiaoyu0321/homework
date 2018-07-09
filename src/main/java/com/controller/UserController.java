@@ -84,6 +84,7 @@ public class UserController {
 			HttpSession session = request.getSession();
 //			ue = us.findUserByName(name);
 			session.setAttribute("username",ue);
+			log.info("--------------session:"+session);
 			OrganizationInfo oi;
 			oi = ps.getOrgNameById(orgId);
 			model.addAttribute("orgName",oi.getOrgname());
@@ -244,7 +245,6 @@ public class UserController {
 	public String outLogin(HttpSession session){
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
-//		session.invalidate();
 		return toLogin();
 	}
 	

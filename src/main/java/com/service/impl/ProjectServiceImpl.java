@@ -14,6 +14,7 @@ import com.entity.OrganizationInfo;
 import com.entity.ProjectInfo;
 import com.entity.UserEntity;
 import com.service.ProjectService;
+import com.util.PageUtil;
 @Service("ProjectService")
 public class ProjectServiceImpl implements ProjectService {
 
@@ -37,6 +38,16 @@ public class ProjectServiceImpl implements ProjectService {
 	//根据用户名查询组织名称
 	public OrganizationInfo getOrgNameById(Integer orgId) {
 		return om.getOrgNameById(orgId);
+	}
+	
+	//获取项目列表
+	public List<ProjectInfo> getProjectList(PageUtil page,UserEntity ue) {		
+		return pm.getProjectList(page,ue);
+	}
+
+	//获取项目总数
+	public Integer getProjectCount(Integer orgId) {
+		return pm.getProjectCount(orgId);
 	}
 
 }

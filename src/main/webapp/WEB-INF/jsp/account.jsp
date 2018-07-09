@@ -17,7 +17,7 @@
 	<!-- 引入顶端导航栏 -->
 	<%@include file="topNav.jsp"%>	
 	<!-- 引入左侧导航栏 -->
-	<%@include file="LeftList.jsp"%>
+	<jsp:include page="LeftList.jsp"/>
 	<style type="text/css">
 	.table-striped>tr>td{
 		font-size: 20px;
@@ -54,8 +54,9 @@
 	  });
 	  if (!urlstatus) {$("#left li").eq(0).addClass('cur');}
 </script>
+
 <body>
-<div class="right-main" style="float:left;margin-left:0px;margin-top:50px;">	
+<div class="right-main" style="float:right;">	
 <div class="div-3" style="margin: 25px 60px 60px;background-color: white">
 	<h1 style="padding-top: 20px;">账号管理</h1>
 	<hr style="border:2px solid #eee;">
@@ -460,12 +461,8 @@
 			}
 			});
 }
-
-
-
 </script>
 
 </div>
 </body>
-
 </html>
