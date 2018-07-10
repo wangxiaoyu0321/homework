@@ -34,6 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			background-color: white;
 			height: 20%;
 			padding: 1px 12px;
+			float: left;
 		}
 		.div_td {
 			background-color:#F5F5F5;
@@ -59,6 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		.div_tp:hover {
 			box-shadow:0 0 1px #00BFFF;
+		}
+		.setting {
+			width: 68px;
+			background-color: white;
+			float: right;
+			height: 100%;
 		}
 	</style>
   </head>
@@ -88,6 +95,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<h3>安全防护</h3>
 				<div class="div_tp" style="margin-bottom: 18px;">主机安全</div>
 				<div class="div_tp">危险预警</div>
+			</div>
+		</div>
+		<div class="setting">
+			<div style="width: 68px;text-align: center">
+				<img alt="" src="../image/setting.gif" style="width: 50px;">
+				<span></span>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 10px;">
+				<img alt="" src="../image/arrow.jpg" style="width: 16px;">
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/pensil.jpg" style="width: 38px;margin-bottom: 5px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/meeting.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/t.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/print.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/sun.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/star.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/todo.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/ball.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
+			</div>
+			<div style="width: 68px;text-align: center;margin-bottom: 20px;">
+				<img alt="" src="../image/pink.jpg" style="width: 38px;">
+				<div style="width: 68px;font-size: 12px;"><span style="text-align: center;">标题待定</span></div>
 			</div>
 		</div>
 	</div>
